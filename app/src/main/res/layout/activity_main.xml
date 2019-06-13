@@ -43,7 +43,9 @@
             android:layout_marginTop="34dp"
             android:layout_marginBottom="458dp"
             android:background="@drawable/textview_shape"
-            android:hint="Username" />
+            android:hint="Username"
+            android:includeFontPadding="true"
+            android:padding="10sp"/>
 
         <EditText
             android:id="@+id/password"
@@ -53,7 +55,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="327dp"
             android:background="@drawable/textview_shape"
-            android:hint="Password" />
+            android:hint="Password"
+            android:includeFontPadding="true"
+            android:padding="10sp"/>
 
 
         <Button
