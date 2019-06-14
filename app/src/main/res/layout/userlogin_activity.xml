@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".SplashActivity"
     android:background="@drawable/grad_bg">
 
     <RelativeLayout
@@ -17,22 +17,22 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
+            android:layout_width="312dp"
+            android:layout_height="112dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="164dp"
-            android:layout_marginLeft="164dp"
-            android:layout_marginTop="97dp"
-            android:layout_marginEnd="172dp"
-            android:layout_marginRight="172dp"
-            android:layout_marginBottom="559dp"
+            android:layout_marginStart="47dp"
+            android:layout_marginLeft="47dp"
+            android:layout_marginTop="104dp"
+            android:layout_marginEnd="52dp"
+            android:layout_marginRight="52dp"
+            android:layout_marginBottom="515dp"
             android:foregroundGravity="center"
-            android:src="@drawable/anonymous" />
+            android:src="@drawable/sekrito_logo" />
 
         <EditText
             android:id="@+id/uname"
@@ -56,9 +56,16 @@
             android:layout_marginBottom="327dp"
             android:background="@drawable/textview_shape"
             android:hint="Password"
+            android:password="true"
             android:includeFontPadding="true"
             android:padding="10sp"/>
-
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/progressbar"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/login_btn"
@@ -98,6 +105,7 @@
             android:layout_marginRight="11dp"
             android:layout_marginBottom="17dp"
             android:text="SignUp"
+
             android:id="@+id/sign_up"/>
 
     </RelativeLayout>
