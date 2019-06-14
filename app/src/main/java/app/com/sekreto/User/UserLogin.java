@@ -23,6 +23,7 @@ import app.com.sekreto.R;
 
 public class UserLogin extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListner;
     EditText username, password;
     ProgressBar progressbar;
     @Override
@@ -36,15 +37,24 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
         password = findViewById(R.id.password);
         progressbar = findViewById(R.id.progressbar);
         login_button.setOnClickListener(this);
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        mAuthStateListner = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser()!= null)
+                {
+                    startActivity(new Intent(UserLogin.this, DashboardActivity.class));
+
+                }
+            }
+        };
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        Intent I = new Intent(UserLogin.this, DashboardActivity.class);
-        I.putExtra("username", currentUser);
+        mAuth.addAuthStateListener(mAuthStateListner);
 
 
     }
@@ -86,9 +96,11 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        String TAG;
+                        progressbar.setVisibility(View.GONE);
+
                         if (task.isSuccessful()) {
-                            progressbar.setVisibility(View.GONE);
+                            finish();
+
                             startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
 
                         } else {

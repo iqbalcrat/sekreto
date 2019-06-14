@@ -11,9 +11,5 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-        String username = getIntent().getStringExtra("username");
-        textView = findViewById(R.id.textView);
-        textView.setText(username);
-
     }
 }
