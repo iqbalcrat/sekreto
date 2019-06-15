@@ -87,10 +87,7 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
             return;
         }
 
-        if(pass.length() < 6){
-            Toast.makeText(UserLogin.this, "Please enter password of more than 6 characters", Toast.LENGTH_SHORT).show();
-        return;
-        }
+
         progressbar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

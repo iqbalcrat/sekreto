@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import app.com.sekreto.User.UserLogin;
+import app.com.sekreto.User.UserRegistration;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, UserLogin.class);
+                Intent intent = new Intent(SplashActivity.this, UserRegistration.class);
                 startActivity(intent);
                 finish();
 

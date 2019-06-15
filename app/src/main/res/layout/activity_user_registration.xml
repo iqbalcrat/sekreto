@@ -12,6 +12,19 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_activity"></include>
 
+    <TextView
+        android:id="@+id/direct_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/toolbar"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_marginTop="86dp"
+        android:layout_marginBottom="626dp"
+        android:text="Already have an account? Login"
+        android:textAlignment="center"
+
+        />
+
 <ImageView
     android:id="@+id/icon"
     android:layout_width="312dp"
@@ -36,39 +49,19 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/username_reg"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="259dp"
-        android:text="Choose your username"
-        />
+        android:layout_marginTop="218dp"
+        android:text="Choose your username" />
 
     <EditText
         android:id="@+id/username_reg"
-        android:padding="15dp"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:textColor="@color/white"
-        android:background="@drawable/semicircle"
-        android:layout_marginTop="300dp"
-        android:hint="Username"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/username_reg"
-        android:layout_alignLeft="@+id/username_reg"
-        android:layout_alignBottom="@+id/toolbar"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="230dp"
-        android:layout_marginLeft="230dp"
-        android:layout_marginTop="315dp"
-        android:layout_marginEnd="-16dp"
-        android:layout_marginRight="-16dp"
-        android:layout_marginBottom="397dp"
-        android:text="confitmation"
-        android:visibility="gone"/>
-
+        android:layout_marginTop="264dp"
+        android:background="@drawable/semicircle"
+        android:hint="Username"
+        android:padding="15dp"
+        android:textColor="@color/white" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,9 +70,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="398dp"
-        android:layout_marginEnd="198dp"
-        android:layout_marginRight="198dp"
+        android:layout_marginTop="341dp"
+        android:layout_marginEnd="203dp"
+        android:layout_marginRight="203dp"
         android:text="Enter email id" />
 
     <EditText
@@ -92,12 +85,12 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="123dp"
-        android:layout_marginLeft="123dp"
-        android:layout_marginTop="437dp"
-        android:layout_marginEnd="-3dp"
-        android:layout_marginRight="-3dp"
-        android:layout_marginBottom="243dp"
+        android:layout_marginStart="121dp"
+        android:layout_marginLeft="121dp"
+        android:layout_marginTop="376dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginRight="-1dp"
+        android:layout_marginBottom="304dp"
         android:background="@drawable/semicircle2"
         android:hint="Email"
         android:padding="15dp" />
@@ -111,14 +104,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="523dp"
-        android:layout_marginEnd="185dp"
-        android:layout_marginRight="185dp"
-        android:layout_marginBottom="189dp"
+        android:layout_marginTop="457dp"
+        android:layout_marginEnd="190dp"
+        android:layout_marginRight="190dp"
+        android:layout_marginBottom="255dp"
         android:text="Enter password" />
 
     <EditText
-        android:id="@+id/email_reg"
+        android:id="@+id/password_reg"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -127,16 +120,40 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="124dp"
-        android:layout_marginLeft="124dp"
-        android:layout_marginTop="566dp"
-        android:layout_marginEnd="-4dp"
-        android:layout_marginRight="-4dp"
-        android:layout_marginBottom="114dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="496dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="184dp"
         android:background="@drawable/semicircle2"
         android:hint="Password"
         android:padding="15dp" />
 
+
+    <CheckBox
+        android:id="@+id/checkbox_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="115dp"
+        android:layout_marginRight="115dp"
+        android:layout_marginBottom="118dp"
+        android:text="I'm over 16 years old" />
+
+    <ProgressBar
+        android:id="@+id/progress_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="336dp"
+        android:layout_marginRight="336dp"
+        android:layout_marginBottom="113dp"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="500dp"
