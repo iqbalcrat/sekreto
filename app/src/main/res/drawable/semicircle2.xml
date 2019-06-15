@@ -4,8 +4,8 @@
     android:shape="rectangle" android:visible="true" >
 
 
-    <corners android:topRightRadius="25dp"
-        android:bottomRightRadius="25dp"></corners>
+    <corners android:topLeftRadius="25dp"
+        android:bottomLeftRadius="25dp"></corners>
     <stroke android:color="@color/white" android:width="0.9dp"></stroke>
 
 

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "478789734124",
+    "firebase_url": "https://sekreto-1b0ac.firebaseio.com",
+    "project_id": "sekreto-1b0ac",
+    "storage_bucket": "sekreto-1b0ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478789734124:android:c19b22f2bb8eb279",
+        "android_client_info": {
+          "package_name": "app.com.sekreto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478789734124-dv3kqk9bgdctv9pgil5abarb18u4sql6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKR6eyOt1sFP3qgDExx91v-YLgepxyJlU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478789734124-dv3kqk9bgdctv9pgil5abarb18u4sql6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

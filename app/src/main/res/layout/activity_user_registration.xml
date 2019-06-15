@@ -1,9 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".User.UserRegistration">
+    tools:context=".User.UserRegistration"
+    android:background="@drawable/grad_bg">
 
-</android.support.constraint.ConstraintLayout>
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_activity"></include>
+
+<ImageView
+    android:id="@+id/icon"
+    android:layout_width="312dp"
+    android:layout_height="112dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentBottom="true"
+    android:layout_marginStart="47dp"
+    android:layout_marginLeft="47dp"
+    android:layout_marginTop="104dp"
+    android:layout_marginEnd="52dp"
+    android:layout_marginRight="52dp"
+    android:layout_marginBottom="515dp"
+    android:foregroundGravity="center"
+    android:src="@drawable/sekrito_logo"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/username_reg"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="259dp"
+        android:text="Choose your username"
+        />
+
+    <EditText
+        android:id="@+id/username_reg"
+        android:padding="15dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:background="@drawable/semicircle"
+        android:layout_marginTop="300dp"
+        android:hint="Username"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/username_reg"
+        android:layout_alignLeft="@+id/username_reg"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="230dp"
+        android:layout_marginLeft="230dp"
+        android:layout_marginTop="315dp"
+        android:layout_marginEnd="-16dp"
+        android:layout_marginRight="-16dp"
+        android:layout_marginBottom="397dp"
+        android:text="confitmation"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/email_reg"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="398dp"
+        android:layout_marginEnd="198dp"
+        android:layout_marginRight="198dp"
+        android:text="Enter email id" />
+
+    <EditText
+        android:id="@+id/email_reg"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="123dp"
+        android:layout_marginLeft="123dp"
+        android:layout_marginTop="437dp"
+        android:layout_marginEnd="-3dp"
+        android:layout_marginRight="-3dp"
+        android:layout_marginBottom="243dp"
+        android:background="@drawable/semicircle2"
+        android:hint="Email"
+        android:padding="15dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/email_reg"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="523dp"
+        android:layout_marginEnd="185dp"
+        android:layout_marginRight="185dp"
+        android:layout_marginBottom="189dp"
+        android:text="Enter password" />
+
+    <EditText
+        android:id="@+id/email_reg"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginTop="566dp"
+        android:layout_marginEnd="-4dp"
+        android:layout_marginRight="-4dp"
+        android:layout_marginBottom="114dp"
+        android:background="@drawable/semicircle2"
+        android:hint="Password"
+        android:padding="15dp" />
+
+
+    <Button
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_reg"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/button_bg"
+        android:text="Register"/>
+
+
+</RelativeLayout>
