@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import app.com.sekreto.DashboardActivity;
 import app.com.sekreto.R;
@@ -32,6 +34,8 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
     TextView direct_login;
     ProgressBar progressBar;
     CheckBox checkbox;
+    DatabaseReference myRef;
+    FirebaseDatabase database;
 
 
     @Override
@@ -48,6 +52,9 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
         register = findViewById(R.id.button_reg);
         register.setOnClickListener(this);
         direct_login.setOnClickListener(this);
+        myRef = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        database= FirebaseDatabase.getInstance();
 
 
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -95,9 +102,16 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
 
     private void RegisterUser() {
 
-        String email = email_reg.getText().toString().trim();
+        final String email = email_reg.getText().toString().trim();
         String pass = password_reg.getText().toString().trim();
-        String uname = uname_reg.getText().toString().trim();
+        final String uname = uname_reg.getText().toString().trim();
+
+        if(!(checkbox.isChecked())){
+
+            Toast.makeText(UserRegistration.this, "Please select the checkbox if you are above 16", Toast.LENGTH_SHORT).show();
+            return;
+
+        }
 
 
         if(TextUtils.isEmpty(uname)){
@@ -118,16 +132,22 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
+
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
+                            //saving user data to the database
+                            UsersInfo usersInfo = new UsersInfo(uname, email);
+                            myRef = database.getReference("Users");
+                            myRef.child(uname).setValue(usersInfo);
+
                             Toast.makeText(UserRegistration.this, "Registration is successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(UserRegistration.this, DashboardActivity.class));
 
-                            // Sign in success, update UI with the signed-in user's information
+
 
                         } else {
                             progressBar.setVisibility(View.GONE);
