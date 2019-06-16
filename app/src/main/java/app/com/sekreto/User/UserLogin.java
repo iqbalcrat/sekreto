@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,7 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
     private FirebaseAuth.AuthStateListener mAuthStateListner;
     EditText username, password;
     ProgressBar progressbar;
+    TextView signup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,9 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
         username = findViewById(R.id.uname);
         password = findViewById(R.id.password);
         progressbar = findViewById(R.id.progressbar);
+        signup = findViewById(R.id.sign_up);
         login_button.setOnClickListener(this);
+        signup.setOnClickListener(this);
 
         // Check if user is signed in (non-null) and update UI accordingly.
         mAuthStateListner = new FirebaseAuth.AuthStateListener() {
@@ -64,6 +68,11 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
         loginUser();
 
     }
+        if(v.getId() == R.id.sign_up){
+
+            startActivity(new Intent(UserLogin.this, UserRegistration.class));
+
+        }
     }
 
     private void loginUser() {
