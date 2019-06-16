@@ -2,6 +2,7 @@ package app.com.sekreto.User;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,8 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
     CheckBox checkbox;
     DatabaseReference myRef;
     FirebaseDatabase database;
+    AnimationDrawable animationDrawable;
+    RelativeLayout relativeLayout;
 
 
     @Override
@@ -50,6 +54,10 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
         progressBar = findViewById(R.id.progress_reg);
         direct_login = findViewById(R.id.direct_login);
         register = findViewById(R.id.button_reg);
+        relativeLayout = (RelativeLayout)findViewById(R.id.relativelayout);
+        animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(5000);
+        animationDrawable.setExitFadeDuration(2000);
         register.setOnClickListener(this);
         direct_login.setOnClickListener(this);
         myRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -68,6 +76,19 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                 }
             }
         };
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (animationDrawable != null && !animationDrawable.isRunning())
+            animationDrawable.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (animationDrawable != null && animationDrawable.isRunning())
+            animationDrawable.stop();
     }
 
     @Override
