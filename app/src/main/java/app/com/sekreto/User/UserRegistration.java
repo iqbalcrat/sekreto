@@ -52,7 +52,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
         register = findViewById(R.id.button_reg);
         register.setOnClickListener(this);
         direct_login.setOnClickListener(this);
-        myRef = FirebaseDatabase.getInstance().getReference();
+        myRef = FirebaseDatabase.getInstance().getReference("Users");
         mAuth = FirebaseAuth.getInstance();
         database= FirebaseDatabase.getInstance();
 
@@ -141,9 +141,8 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                             progressBar.setVisibility(View.GONE);
                             //saving user data to the database
                             UsersInfo usersInfo = new UsersInfo(uname, email);
-                            myRef = database.getReference("Users");
-                            myRef.child(uname).setValue(usersInfo);
-
+                            String id = myRef.push().getKey();
+                            myRef.child(id).setValue(usersInfo);
                             Toast.makeText(UserRegistration.this, "Registration is successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(UserRegistration.this, DashboardActivity.class));
 
