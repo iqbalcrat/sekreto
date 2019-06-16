@@ -5,6 +5,7 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">#000000</color>
-    <color name="gradient_start">#19AA8B</color>
-    <color name="gradient_end">#23A7DB</color>
+    <color name="gradient_start">#E0EAFC</color>
+    <color name="gradient_end">#CFDEF3</color>
+    <color name="dull">#CFDEF3</color>
 </resources>
