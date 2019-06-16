@@ -9,7 +9,9 @@
     android:id="@+id/relativelayout"
     android:background="@drawable/animation_bg">
 
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_activity"></include>
 
 
     <LinearLayout
