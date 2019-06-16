@@ -64,17 +64,11 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                 if(firebaseAuth.getCurrentUser()!= null)
                 {
                     startActivity(new Intent(UserRegistration.this, DashboardActivity.class));
-
+                    finish();
                 }
             }
         };
-
-
-
     }
-
-
-
 
     @Override
     public void onStart() {
@@ -82,7 +76,6 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
         // Check if user is signed in (non-null) and update UI accordingly.
         mAuth.addAuthStateListener(mAuthStateListner);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -105,15 +98,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
         final String email = email_reg.getText().toString().trim();
         String pass = password_reg.getText().toString().trim();
         final String uname = uname_reg.getText().toString().trim();
-
-        if(!(checkbox.isChecked())){
-
-            Toast.makeText(UserRegistration.this, "Please select the checkbox if you are above 16", Toast.LENGTH_SHORT).show();
-            return;
-
-        }
-
-
+        //Input fields validations
         if(TextUtils.isEmpty(uname)){
             Toast.makeText(UserRegistration.this, "Please enter username", Toast.LENGTH_SHORT).show();
             return;
@@ -131,14 +116,21 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
             Toast.makeText(UserRegistration.this, "Please enter password of more than 6 characters", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if(!(checkbox.isChecked())){
+
+            Toast.makeText(UserRegistration.this, "Please select the checkbox if you are above 16", Toast.LENGTH_SHORT).show();
+            return;
+
+        }
         progressBar.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
                             //saving user data to the database
                             UsersInfo usersInfo = new UsersInfo(uname, email);
                             String id = myRef.push().getKey();
@@ -149,16 +141,13 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
 
 
                         } else {
-                            progressBar.setVisibility(View.GONE);
-                            // If sign in fails, display a message to the user.
+                         // If sign in fails, display a message to the user.
                             Toast.makeText(UserRegistration.this, "Registration failed.", Toast.LENGTH_SHORT).show();
 
                         }
 
-                        // ...
                     }
                 });
-
 
     }
 }

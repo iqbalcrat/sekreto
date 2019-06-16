@@ -55,13 +55,7 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthStateListner);
-
-
     }
-
-
-
-
 
     @Override
     public void onClick(View v) {
@@ -104,8 +98,7 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
                             Toast.makeText(UserLogin.this, "Login failed", Toast.LENGTH_SHORT).show();
                         }
 
-                        // ...
-                    }
+                   }
                 });
 
     }

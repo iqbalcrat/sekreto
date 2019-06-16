@@ -7,9 +7,19 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:background="@color/gradient_end"
-        ></android.support.v7.widget.Toolbar>
+        android:textAlignment="center">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="45dp"
+            android:src="@drawable/sekrito_logo"
+            android:layout_marginLeft="160dp"
+
+            />
+
+
+    </android.support.v7.widget.Toolbar>
 
 
 
