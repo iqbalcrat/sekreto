@@ -124,8 +124,8 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
             Toast.makeText(UserRegistration.this, "Please enter username", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(UserRegistration.this, "Please enter email id", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(email) ||  !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            Toast.makeText(UserRegistration.this, "Please enter valid email address", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(pass)){
