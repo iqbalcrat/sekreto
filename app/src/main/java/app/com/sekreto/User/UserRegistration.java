@@ -54,7 +54,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
         progressBar = findViewById(R.id.progress_reg);
         direct_login = findViewById(R.id.direct_login);
         register = findViewById(R.id.button_reg);
-        relativeLayout = (RelativeLayout)findViewById(R.id.relativelayout);
+        relativeLayout = findViewById(R.id.relativelayout);
         animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(5000);
         animationDrawable.setExitFadeDuration(2000);
@@ -158,7 +158,6 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                             myRef.child(id).setValue(usersInfo);
                             Toast.makeText(UserRegistration.this, "Registration is successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(UserRegistration.this, DashboardActivity.class));
-
 
 
                         } else {

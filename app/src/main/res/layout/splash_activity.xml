@@ -22,8 +22,8 @@
         <ImageView
             android:id="@+id/icon"
             android:layout_width="312dp"
-            android:layout_height="112dp"
-            android:src="@drawable/sekrito_logo"
+            android:layout_height="220dp"
+            android:src="@drawable/sekrito_splash_logo"
             android:layout_gravity="center"
             />
 
