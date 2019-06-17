@@ -48,28 +48,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/username_reg"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="218dp"
-            android:text="Choose your username:" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/username_reg"
+                android:layout_alignParentTop="false"
+                android:layout_marginTop="218dp"
+                android:paddingRight="130dp"
+                android:paddingBottom="12dp"
+                android:text="Choose your username:" />
+
 
             <EditText
                 android:id="@+id/username_reg"
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_weight="0.5"
-                android:background="@drawable/semicircle"
+                android:background="@drawable/semicircle2"
                 android:hint="Username"
                 android:padding="15dp"
+                android:gravity="left"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white" />
 
@@ -80,18 +87,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="20dp"
+                android:gravity="right"
                 android:text="confirmation"
                 android:visibility="invisible" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="right"
-            android:orientation="vertical"
-            android:paddingTop="25dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,7 +114,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/email_reg"
                 android:layout_marginTop="25dp"
-                android:gravity="right"
                 android:paddingRight="190dp"
                 android:text="Enter password" />
 
@@ -158,8 +155,9 @@
 
         <Button
             android:id="@+id/button_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_alignBottom="@+id/toolbar"
             android:background="@drawable/button_bg"
             android:text="Register"
