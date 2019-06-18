@@ -40,6 +40,14 @@
             android:layout_weight="1"
             android:text="Sign Out"
             android:id="@+id/signout_btn"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="ItemList"
+            android:onClick="goToListView"
+            android:id="@+id/itemList"/>
     </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
