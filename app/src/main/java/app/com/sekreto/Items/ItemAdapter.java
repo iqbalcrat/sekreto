@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import app.com.sekreto.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
@@ -29,13 +30,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public static class  ItemViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView mImageView;
+
         public TextView mTextView1;
         public TextView mTextView2;
+        public CircleImageView mProfilePic;
+
 
         public ItemViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
+            mProfilePic = itemView.findViewById(R.id.profile_image);
             mTextView1 = itemView.findViewById(R.id.textView1);
             mTextView2 = itemView.findViewById(R.id.textView2);
 
@@ -79,7 +82,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         Item currentItem = itemArrayList.get(i);
 
-        itemViewHolder.mImageView.setImageResource(currentItem.getmImageResource());
+        itemViewHolder.mProfilePic.setImageResource(currentItem.getmImageResource());
         itemViewHolder.mTextView1.setText(currentItem.getLine1());
         itemViewHolder.mTextView2.setText(currentItem.getLine2());
 
