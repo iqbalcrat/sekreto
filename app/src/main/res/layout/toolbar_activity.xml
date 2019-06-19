@@ -7,13 +7,7 @@
     android:textAlignment="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="45dp"
-            android:src="@drawable/sekrito_logo"
-            android:layout_marginLeft="160dp"
 
-            />
 
 
     </android.support.v7.widget.Toolbar>

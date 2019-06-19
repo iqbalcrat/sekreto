@@ -29,7 +29,7 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
     private FirebaseAuth.AuthStateListener mAuthStateListner;
     EditText username, password;
     ProgressBar progressbar;
-    TextView signup;
+    TextView signup, forgetPassword;
     AnimationDrawable animationDrawable;
     RelativeLayout relativeLayout;
     @Override
@@ -40,6 +40,7 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
         mAuth = FirebaseAuth.getInstance();
         Button login_button = (Button) findViewById(R.id.login_btn);
         username = findViewById(R.id.uname);
+        forgetPassword = findViewById(R.id.forget_password);
         password = findViewById(R.id.password);
         progressbar = findViewById(R.id.progressbar);
         signup = findViewById(R.id.sign_up);
@@ -49,6 +50,7 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
         animationDrawable.setExitFadeDuration(2000);
         login_button.setOnClickListener(this);
         signup.setOnClickListener(this);
+        forgetPassword.setOnClickListener(this);
 
         // Check if user is signed in (non-null) and update UI accordingly.
         mAuthStateListner = new FirebaseAuth.AuthStateListener() {
@@ -86,14 +88,22 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-    if(v.getId() == R.id.login_btn){
 
-        loginUser();
 
-    }
-        if(v.getId() == R.id.sign_up){
 
-            startActivity(new Intent(UserLogin.this, UserRegistration.class));
+        switch (v.getId()){
+
+            case R.id.login_btn:
+                loginUser();
+                break;
+            case R.id.sign_up:
+                startActivity(new Intent(UserLogin.this, UserRegistration.class));
+                break;
+            case R.id.forget_password:
+                startActivity(new Intent(UserLogin.this, ForgetPassword.class));
+                break;
+
+
 
         }
     }
