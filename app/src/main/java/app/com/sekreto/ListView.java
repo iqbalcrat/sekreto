@@ -22,12 +22,15 @@ public class ListView extends AppCompatActivity {
     private ArrayList<Item> mItemList = new ArrayList<>();
     Toolbar my_toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
-
+        my_toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(my_toolbar);
+        getSupportActionBar().setTitle("Chat");
 
 
 
