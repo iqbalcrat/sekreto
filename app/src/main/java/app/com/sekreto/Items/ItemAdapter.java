@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,16 @@ import app.com.sekreto.R;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
     private ArrayList<Item> itemArrayList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListner(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public static class  ItemViewHolder extends RecyclerView.ViewHolder{
 
@@ -22,11 +33,26 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         public TextView mTextView1;
         public TextView mTextView2;
 
-        public ItemViewHolder(@NonNull View itemView) {
+        public ItemViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageView);
             mTextView1 = itemView.findViewById(R.id.textView1);
             mTextView2 = itemView.findViewById(R.id.textView2);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+
+                }
+            });
         }
     }
 
@@ -42,7 +68,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_item, parent, false);
-        ItemViewHolder evh = new ItemViewHolder(v);
+        ItemViewHolder evh = new ItemViewHolder(v, mListener);
         return evh;
 
 
