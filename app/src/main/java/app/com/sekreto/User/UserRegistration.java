@@ -40,8 +40,10 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
     FirebaseDatabase database;
     AnimationDrawable animationDrawable;
     RelativeLayout relativeLayout;
+    private  String TAG = "UserRegistrationActivity";
 
 
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,13 +66,16 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
         database= FirebaseDatabase.getInstance();
 
+        Log.d(TAG, "Entered into OnCreate");
 
         // Check if user is signed in (non-null) and update UI accordingly.
         mAuthStateListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.d(TAG, "Checking whether already user is logged in or not");
                 if(firebaseAuth.getCurrentUser()!= null)
                 {
+                    Log.d(TAG, "User is already logged in");
                     startActivity(new Intent(UserRegistration.this, DashboardActivity.class));
                     finish();
                 }
@@ -80,6 +85,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "Activity on Resume");
         if (animationDrawable != null && !animationDrawable.isRunning())
             animationDrawable.start();
     }
@@ -87,6 +93,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d(TAG, "Activity on Pause");
         if (animationDrawable != null && animationDrawable.isRunning())
             animationDrawable.stop();
     }
@@ -116,6 +123,8 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
 
     private void RegisterUser() {
 
+        Log.d(TAG, "Activity in Register User method");
+
         final String email = email_reg.getText().toString().trim();
         String pass = password_reg.getText().toString().trim();
         final String uname = uname_reg.getText().toString().trim();
@@ -124,7 +133,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
             Toast.makeText(UserRegistration.this, "Please enter username", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(email) ||  !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if(TextUtils.isEmpty(email)){
             Toast.makeText(UserRegistration.this, "Please enter valid email address", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -150,8 +159,10 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "Activity inmAuth.createUserWithEmailAndPassword");
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
+                            Log.d(TAG, "Creation of user is successfull");
                             //saving user data to the database
                             UsersInfo usersInfo = new UsersInfo(uname, email);
                             String id = myRef.push().getKey();
@@ -162,6 +173,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
 
                         } else {
                          // If sign in fails, display a message to the user.
+                            Log.d(TAG, "Creation of user is failed");
                             Toast.makeText(UserRegistration.this, "Registration failed.", Toast.LENGTH_SHORT).show();
 
                         }

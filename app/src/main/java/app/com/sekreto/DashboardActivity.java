@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 import app.com.sekreto.User.UserLogin;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -18,6 +20,7 @@ public class DashboardActivity extends AppCompatActivity {
     Button signOut;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,15 +30,22 @@ public class DashboardActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         textView.append(firebaseUser.getEmail());
-signOut.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        mAuth.getInstance().signOut();
-        Toast.makeText(DashboardActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(DashboardActivity.this, UserLogin.class));
-        finish();
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.getInstance().signOut();
+                Toast.makeText(DashboardActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DashboardActivity.this, UserLogin.class));
+                finish();
+            }
+        });
+
     }
-});
+
+    public void goToListView(View view) {
+
+        Intent intent = new Intent(this, ListView.class);
+        startActivity(intent);
 
     }
 }
