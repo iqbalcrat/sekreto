@@ -2,10 +2,9 @@ package app.com.sekreto;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import app.com.sekreto.User.UserLogin;
 import app.com.sekreto.User.UserRegistration;
 
 public class SplashActivity extends AppCompatActivity {
