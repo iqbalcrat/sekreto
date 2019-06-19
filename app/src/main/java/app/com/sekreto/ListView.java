@@ -17,8 +17,9 @@ import app.com.sekreto.Items.ItemAdapter;
 public class ListView extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ItemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<Item> mItemList = new ArrayList<>();
     Toolbar my_toolbar;
 
     @Override
@@ -29,23 +30,23 @@ public class ListView extends AppCompatActivity {
 
 
 
-        ArrayList<Item> ItemList = new ArrayList<>();
-        ItemList.add(new Item(R.drawable.ic_android, "Line 1", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_audio, "Line 2", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_sun, "Line 3", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_sun, "Line 4", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_android, "Line 1", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_audio, "Line 2", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_sun, "Line 3", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_sun, "Line 4", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_android, "Line 1", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_audio, "Line 2", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_sun, "Line 3", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_sun, "Line 4", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_android, "Line 1", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_audio, "Line 2", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_sun, "Line 3", "Line 2"));
-        ItemList.add(new Item(R.drawable.ic_sun, "Line 4", "Line 2"));
+
+        mItemList.add(new Item(R.drawable.ic_android, "Line 1", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_audio, "Line 2", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_sun, "Line 3", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_sun, "Line 4", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_android, "Line 1", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_audio, "Line 2", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_sun, "Line 3", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_sun, "Line 4", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_android, "Line 1", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_audio, "Line 2", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_sun, "Line 3", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_sun, "Line 4", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_android, "Line 1", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_audio, "Line 2", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_sun, "Line 3", "Line 2"));
+        mItemList.add(new Item(R.drawable.ic_sun, "Line 4", "Line 2"));
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -54,10 +55,22 @@ public class ListView extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        mAdapter = new ItemAdapter(ItemList);
+        mAdapter = new ItemAdapter(mItemList);
 
         mRecyclerView.setAdapter(mAdapter);
 
+        mAdapter.setOnItemClickListner(new ItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                mItemList.get(position).changeText1("clicked");
+                mAdapter.notifyItemChanged(position);
+
+            }
+        });
+
 
     }
+
+
 }

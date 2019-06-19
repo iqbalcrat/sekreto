@@ -23,4 +23,8 @@ public class Item {
     public String getLine2() {
         return line2;
     }
+
+    public void changeText1(String clicked) {
+        this.line1 = clicked;
+    }
 }
