@@ -59,16 +59,6 @@ public class ListView extends AppCompatActivity {
         setSupportActionBar(my_toolbar);
         getSupportActionBar().setTitle("Users");
         getUpdatedList();
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mItemList.clear();
-                getUpdatedList();
-                swipeRefreshLayout.setRefreshing(false);
-
-            }
-        });
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);
@@ -96,7 +86,7 @@ public class ListView extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
                 List<DocumentChange> docChanges = queryDocumentSnapshots.getDocumentChanges();
-
+                Log.d(TAG, "No of changes: " + docChanges.size());
                 for (DocumentChange doc : docChanges) {
                     mItemList.add(new Item(R.drawable.ic_sun, doc.getDocument().get("fullName").toString(), "Line " + mItemList.size()));
                     Log.d(TAG, doc.getDocument().get("fullName").toString());
@@ -118,27 +108,4 @@ public class ListView extends AppCompatActivity {
         });
 
     }
-
-
-    public void getExistingData(){
-
-        db.collection("Users").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-
-                                mItemList.add(new Item(R.drawable.ic_sun, document.get("fullName").toString(), "Line " + mItemList.size()));
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
-
-
 }
