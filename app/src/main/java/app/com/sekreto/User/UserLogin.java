@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +19,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 import app.com.sekreto.DashboardActivity;
+import app.com.sekreto.Items.Item;
 import app.com.sekreto.R;
 
 public class UserLogin extends AppCompatActivity implements View.OnClickListener {
@@ -30,6 +43,15 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
     TextView signup, forgetPassword;
     AnimationDrawable animationDrawable;
     RelativeLayout relativeLayout;
+    private ArrayList<Item> mItemList = new ArrayList<>();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final String TAG = "UserLogin";
+    CollectionReference listenerRegistration = db.collection("Users");
+
+    public ArrayList<Item> getmItemList() {
+        return mItemList;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +81,16 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
                     startActivity(new Intent(UserLogin.this, DashboardActivity.class));
 
                 }
+
+
             }
         };
+
+
+
     }
+
+
 
     @Override
     protected void onResume() {

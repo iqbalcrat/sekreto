@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import app.com.sekreto.User.UserLogin;
 
@@ -18,6 +19,7 @@ public class DashboardActivity extends AppCompatActivity {
     Button signOut;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
