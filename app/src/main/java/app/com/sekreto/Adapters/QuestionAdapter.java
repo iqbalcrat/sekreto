@@ -17,13 +17,13 @@ import app.com.sekreto.Models.Question;
 import app.com.sekreto.QuestionDetails;
 import app.com.sekreto.R;
 
-public class Adapter extends PagerAdapter {
+public class QuestionAdapter extends PagerAdapter {
 
     private List<Question> models;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public Adapter(List<Question> models, Context context) {
+    public QuestionAdapter(List<Question> models, Context context) {
         this.models = models;
         this.context = context;
     }

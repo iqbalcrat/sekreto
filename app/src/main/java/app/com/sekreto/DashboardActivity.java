@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.com.sekreto.Adapters.Adapter;
+import app.com.sekreto.Adapters.QuestionAdapter;
 import app.com.sekreto.Models.Question;
 import app.com.sekreto.User.UserLogin;
 
@@ -57,7 +57,7 @@ public class DashboardActivity extends AppCompatActivity {
         models.add(new Question("Mangalagiri", "Poster", R.drawable.anonymous));
         models.add(new Question("Mangalagiri", "Namecard", R.drawable.anonymous));
 
-        final Adapter adapter = new Adapter(models, this);
+        final QuestionAdapter adapter = new QuestionAdapter(models, this);
 
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter((PagerAdapter) adapter);

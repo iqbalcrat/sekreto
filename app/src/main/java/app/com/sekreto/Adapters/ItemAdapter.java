@@ -1,4 +1,4 @@
-package app.com.sekreto.Items;
+package app.com.sekreto.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import app.com.sekreto.Models.Item;
 import app.com.sekreto.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 

@@ -1,4 +1,4 @@
-package app.com.sekreto.Items;
+package app.com.sekreto.Models;
 
 public class Item {
 
