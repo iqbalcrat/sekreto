@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuestionDetails"></activity>
+        <activity android:name=".QuestionScreen"></activity>
+        <activity android:name=".QuestionDetails" />
         <activity android:name=".ListView" />
         <activity android:name=".User.EmailVerification" />
         <activity android:name=".User.UserProfile" />
