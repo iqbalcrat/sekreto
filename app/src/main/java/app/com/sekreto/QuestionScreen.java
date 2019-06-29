@@ -15,9 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +30,8 @@ public class QuestionScreen extends AppCompatActivity {
     Dialog myDialog;
     private EditText questionText;
     private Button button;
+    FirebaseUser firebaseUser;
+    FirebaseAuth mAuth;
     // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -57,10 +63,17 @@ public class QuestionScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                mAuth = FirebaseAuth.getInstance();
+                firebaseUser = mAuth.getCurrentUser();
+
                 Log.d(TAG , questionText.getText().toString());
 
+                Date d1 = new Date();
                 Map<String, Object> question = new HashMap<>();
                 question.put("question", questionText.getText().toString());
+                question.put("User", firebaseUser);
+                question.put("Time",d1 );
+
 
 
                 db.collection("Questions")
