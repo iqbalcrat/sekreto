@@ -103,4 +103,10 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
     }
+
+    public void getMyQuestions(View view) {
+
+        Intent intent = new Intent(this, ListView.class);
+        startActivity(intent);
+    }
 }

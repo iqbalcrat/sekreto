@@ -10,6 +10,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -17,8 +19,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -35,7 +41,8 @@ public class ListView extends AppCompatActivity {
     Toolbar my_toolbar;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    FirebaseUser firebaseUser;
+    FirebaseAuth mAuth;
 
 
 
@@ -43,10 +50,11 @@ public class ListView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
         my_toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(my_toolbar);
-        getSupportActionBar().setTitle("Users");
+        getSupportActionBar().setTitle("Your Questions");
         getUpdatedList();
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(false);
@@ -69,7 +77,10 @@ public class ListView extends AppCompatActivity {
 
     public void getUpdatedList(){
 
-        CollectionReference listenerRegistration = db.collection("Users");
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
+
+        CollectionReference listenerRegistration = db.collection("Questions");
         listenerRegistration.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -77,8 +88,21 @@ public class ListView extends AppCompatActivity {
                 List<DocumentChange> docChanges = queryDocumentSnapshots.getDocumentChanges();
                 Log.d(TAG, "No of changes: " + docChanges.size());
                 for (DocumentChange doc : docChanges) {
-                    mItemList.add(new Item(R.drawable.ic_sun, doc.getDocument().get("fullName").toString(), "Line " + mItemList.size()));
-                    Log.d(TAG, doc.getDocument().get("fullName").toString());
+
+                    if(doc.getDocument().getData().containsKey("question")){
+                        Log.d(TAG, doc.getDocument().getData().toString());
+                        if(doc.getDocument().getData().containsKey("User")){
+
+                            Map<String, Object> user =(HashMap<String,Object>) doc.getDocument().get("User");
+                            Log.d(TAG, user.toString());
+                            if(firebaseUser.getEmail().contentEquals(user.get("email").toString())){
+                                mItemList.add(new Item(R.drawable.ic_sun, doc.getDocument().get("question").toString(), "Answers : 0" ));
+                                Log.d(TAG, doc.getDocument().get("question").toString());
+
+                            }
+                        }
+                    }
+
                 }
                 mAdapter = new ItemAdapter(mItemList);
                 mRecyclerView.setAdapter(mAdapter);
