@@ -3,6 +3,7 @@ package app.com.sekreto;
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Delayed;
 
 import javax.annotation.Nullable;
 
@@ -31,6 +33,7 @@ import app.com.sekreto.Adapters.QuestionAdapter;
 import app.com.sekreto.Models.Item;
 import app.com.sekreto.Models.Question;
 import app.com.sekreto.User.UserLogin;
+import app.com.sekreto.User.UserRegistration;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -53,6 +56,7 @@ public class DashboardActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         //textView.append(firebaseUser.getEmail());
+
         askQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,64 +71,34 @@ public class DashboardActivity extends AppCompatActivity {
         models.add(new Question("Mangalagiri", "Sticker", R.drawable.anonymous));
         models.add(new Question("Mangalagiri", "Poster", R.drawable.anonymous));
         models.add(new Question("Mangalagiri", "Namecard", R.drawable.anonymous));
-
-         getUpdatedList();
+        getUpdatedList();
         final QuestionAdapter adapter = new QuestionAdapter(models, this);
-
-        viewPager = findViewById(R.id.viewPager);
-        viewPager.setAdapter(adapter);
-        viewPager.setPadding(130, 0, 130, 0);
-
-        Integer[] colors_temp = {
-                getResources().getColor(R.color.color1),
-                getResources().getColor(R.color.color2),
-                getResources().getColor(R.color.color3),
-                getResources().getColor(R.color.color4)
-        };
-
-        colors = colors_temp;
-
-
-
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        Handler delayHandler = new Handler();
+        delayHandler.postDelayed(new Runnable() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void run() {
 
-                if (position < (adapter.getCount() -1) && position < (colors.length - 1)) {
-                    viewPager.setBackgroundColor(
 
-                            (Integer) argbEvaluator.evaluate(
-                                    positionOffset,
-                                    colors[position],
-                                    colors[position + 1]
-                            )
-                    );
-                }
-
-                else {
-                    viewPager.setBackgroundColor(colors[colors.length - 1]);
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
+                viewPager = findViewById(R.id.viewPager);
+                viewPager.setAdapter(adapter);
+                viewPager.setPadding(130, 0, 130, 0);
 
             }
+        },7500);
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
 
-            }
-        });
+
+
+
+
+
+
+
+
+
 
     }
 
-    public void goToListView(View view) {
-
-        Intent intent = new Intent(this, ListView.class);
-        startActivity(intent);
-
-    }
 
     public void getUpdatedList(){
 
