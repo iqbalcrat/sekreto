@@ -20,7 +20,7 @@
 
     <Button
         android:id="@+id/signout_btn"
-        android:text="Sign Out"
+        android:text="Ask question"
         android:textColor="#fff"
         android:background="@drawable/round"
         android:paddingLeft="30dp"

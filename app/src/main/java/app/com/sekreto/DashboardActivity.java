@@ -33,8 +33,10 @@ import app.com.sekreto.Models.Question;
 import app.com.sekreto.User.UserLogin;
 
 public class DashboardActivity extends AppCompatActivity {
+
     private static final String TAG = "DashBoardActivity" ;
     Button signOut;
+    Button askQuestion;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -47,16 +49,16 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
-        signOut = findViewById(R.id.signout_btn);
+        askQuestion = findViewById(R.id.signout_btn);
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         //textView.append(firebaseUser.getEmail());
-        signOut.setOnClickListener(new View.OnClickListener() {
+        askQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.getInstance().signOut();
-                Toast.makeText(DashboardActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(DashboardActivity.this, UserLogin.class));
+               // mAuth.getInstance().signOut();
+                //Toast.makeText(DashboardActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DashboardActivity.this, QuestionScreen.class));
                 finish();
             }
         });
