@@ -3,6 +3,7 @@ package app.com.sekreto;
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,22 +14,32 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import app.com.sekreto.Adapters.ItemAdapter;
 import app.com.sekreto.Adapters.QuestionAdapter;
+import app.com.sekreto.Models.Item;
 import app.com.sekreto.Models.Question;
 import app.com.sekreto.User.UserLogin;
 
 public class DashboardActivity extends AppCompatActivity {
+    private static final String TAG = "DashBoardActivity" ;
     Button signOut;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ViewPager viewPager;
-    List<Question> models;
+    List<Question> models =new ArrayList<>();
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
@@ -50,17 +61,16 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-
-        models = new ArrayList<>();
         models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Brochure", R.drawable.anonymous));
         models.add(new Question("Mangalagiri", "Sticker", R.drawable.anonymous));
         models.add(new Question("Mangalagiri", "Poster", R.drawable.anonymous));
         models.add(new Question("Mangalagiri", "Namecard", R.drawable.anonymous));
 
+         getUpdatedList();
         final QuestionAdapter adapter = new QuestionAdapter(models, this);
 
         viewPager = findViewById(R.id.viewPager);
-        viewPager.setAdapter((PagerAdapter) adapter);
+        viewPager.setAdapter(adapter);
         viewPager.setPadding(130, 0, 130, 0);
 
         Integer[] colors_temp = {
@@ -71,6 +81,8 @@ public class DashboardActivity extends AppCompatActivity {
         };
 
         colors = colors_temp;
+
+
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -109,6 +121,26 @@ public class DashboardActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, ListView.class);
         startActivity(intent);
+
+    }
+
+    public void getUpdatedList(){
+
+        CollectionReference listenerRegistration = db.collection("Users");
+        listenerRegistration.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                List<DocumentChange> docChanges = queryDocumentSnapshots.getDocumentChanges();
+                Log.d(TAG, "No of changes: " + docChanges.size());
+                for (DocumentChange doc : docChanges) {
+                    models.add(new Question(doc.getDocument().get("fullName").toString(), "Sticker", R.drawable.anonymous));
+                    Log.d(TAG, doc.getDocument().get("fullName").toString());
+                }
+
+
+            }
+        });
 
     }
 }
