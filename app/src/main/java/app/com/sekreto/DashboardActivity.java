@@ -67,38 +67,22 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Brochure", R.drawable.anonymous));
-        models.add(new Question("Mangalagiri", "Sticker", R.drawable.anonymous));
-        models.add(new Question("Mangalagiri", "Poster", R.drawable.anonymous));
-        models.add(new Question("Mangalagiri", "Namecard", R.drawable.anonymous));
+        models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Join Chat", R.drawable.anonymous));
+        models.add(new Question("Mangalagiri", "Join Chat", R.drawable.anonymous));
+        models.add(new Question("Mangalagiri", "Join Chat", R.drawable.anonymous));
+        models.add(new Question("Mangalagiri", "Join Chat", R.drawable.anonymous));
         getUpdatedList();
         final QuestionAdapter adapter = new QuestionAdapter(models, this);
         Handler delayHandler = new Handler();
         delayHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-
                 viewPager = findViewById(R.id.viewPager);
                 viewPager.setAdapter(adapter);
                 viewPager.setPadding(130, 0, 130, 0);
-
             }
         },7500);
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
 
     public void getUpdatedList(){
 
@@ -110,11 +94,9 @@ public class DashboardActivity extends AppCompatActivity {
                 List<DocumentChange> docChanges = queryDocumentSnapshots.getDocumentChanges();
                 Log.d(TAG, "No of changes: " + docChanges.size());
                 for (DocumentChange doc : docChanges) {
-                    models.add(new Question(doc.getDocument().get("fullName").toString(), "Sticker", R.drawable.anonymous));
+                    models.add(new Question(doc.getDocument().get("fullName").toString(), "Join Chat", R.drawable.anonymous));
                     Log.d(TAG, doc.getDocument().get("fullName").toString());
                 }
-
-
             }
         });
 
