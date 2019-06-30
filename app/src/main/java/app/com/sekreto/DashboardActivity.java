@@ -65,7 +65,6 @@ public class DashboardActivity extends AppCompatActivity {
                 // mAuth.getInstance().signOut();
                 //Toast.makeText(DashboardActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(DashboardActivity.this, QuestionScreen.class));
-                finish();
             }
         });
 
