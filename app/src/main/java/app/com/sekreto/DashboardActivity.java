@@ -23,7 +23,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Delayed;
 
 import javax.annotation.Nullable;
@@ -37,14 +39,14 @@ import app.com.sekreto.User.UserRegistration;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private static final String TAG = "DashBoardActivity" ;
+    private static final String TAG = "DashBoardActivity";
     Button signOut;
     Button askQuestion;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ViewPager viewPager;
-    List<Question> models =new ArrayList<>();
+    List<Question> models = new ArrayList<>();
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
@@ -60,16 +62,13 @@ public class DashboardActivity extends AppCompatActivity {
         askQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // mAuth.getInstance().signOut();
+                // mAuth.getInstance().signOut();
                 //Toast.makeText(DashboardActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(DashboardActivity.this, QuestionScreen.class));
             }
         });
 
         models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Join Chat", R.drawable.anonymous));
-        models.add(new Question("Mangalagiri", "Join Chat", R.drawable.anonymous));
-        models.add(new Question("Mangalagiri", "Join Chat", R.drawable.anonymous));
-        models.add(new Question("Mangalagiri", "Join Chat", R.drawable.anonymous));
         getUpdatedList();
         final QuestionAdapter adapter = new QuestionAdapter(models, this);
         Handler delayHandler = new Handler();
@@ -80,12 +79,12 @@ public class DashboardActivity extends AppCompatActivity {
                 viewPager.setAdapter(adapter);
                 viewPager.setPadding(130, 0, 130, 0);
             }
-        },7500);
+        }, 7500);
     }
 
-    public void getUpdatedList(){
+    public void getUpdatedList() {
 
-        CollectionReference listenerRegistration = db.collection("Users");
+        CollectionReference listenerRegistration = db.collection("Questions");
         listenerRegistration.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -93,11 +92,30 @@ public class DashboardActivity extends AppCompatActivity {
                 List<DocumentChange> docChanges = queryDocumentSnapshots.getDocumentChanges();
                 Log.d(TAG, "No of changes: " + docChanges.size());
                 for (DocumentChange doc : docChanges) {
-                    models.add(new Question(doc.getDocument().get("fullName").toString(), "Join Chat", R.drawable.anonymous));
-                    Log.d(TAG, doc.getDocument().get("fullName").toString());
+
+                    if (doc.getDocument().getData().containsKey("question")) {
+                        String person = "Anonymous";
+                        if (doc.getDocument().getData().containsKey("User")){
+                            Map<String, Object> user = (HashMap)doc.getDocument().get("User");
+                            if(user.containsKey("email")){
+                                person = user.get("email").toString().split("@")[0];
+                                Log.d(TAG, person);
+                            }
+                        }
+                        models.add(new Question(doc.getDocument().get("question").toString(), "Join Chat :" + person, R.drawable.anonymous));
+                        Log.d(TAG, doc.getDocument().get("question").toString());
+
+                    }
+
                 }
             }
         });
 
+    }
+
+    public void getMyQuestions(View view) {
+
+        Intent intent = new Intent(this, ListView.class);
+        startActivity(intent);
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import app.com.sekreto.User.ForgetPassword;
 
 public class QuestionScreen extends AppCompatActivity {
     private static final String TAG = "QuestionScreen";
@@ -69,7 +72,7 @@ public class QuestionScreen extends AppCompatActivity {
                 Log.d(TAG , questionText.getText().toString());
 
                 Date d1 = new Date();
-                Map<String, Object> question = new HashMap<>();
+                final Map<String, Object> question = new HashMap<>();
                 question.put("question", questionText.getText().toString());
                 question.put("User", firebaseUser);
                 question.put("Time",d1 );
@@ -82,6 +85,9 @@ public class QuestionScreen extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                myDialog.dismiss();
+                                Toast.makeText(QuestionScreen.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
