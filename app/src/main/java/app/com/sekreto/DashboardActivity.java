@@ -23,7 +23,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Delayed;
 
 import javax.annotation.Nullable;
@@ -93,7 +95,15 @@ public class DashboardActivity extends AppCompatActivity {
                 for (DocumentChange doc : docChanges) {
 
                     if (doc.getDocument().getData().containsKey("question")) {
-                        models.add(new Question(doc.getDocument().get("question").toString(), "Join Chat", R.drawable.anonymous));
+                        String person = "Anonymous";
+                        if (doc.getDocument().getData().containsKey("User")){
+                            Map<String, Object> user = (HashMap)doc.getDocument().get("User");
+                            if(user.containsKey("email")){
+                                person = user.get("email").toString().split("@")[0];
+                                Log.d(TAG, person);
+                            }
+                        }
+                        models.add(new Question(doc.getDocument().get("question").toString(), "Join Chat :" + person, R.drawable.anonymous));
                         Log.d(TAG, doc.getDocument().get("question").toString());
 
                     }
