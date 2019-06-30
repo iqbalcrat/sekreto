@@ -1,6 +1,7 @@
 package app.com.sekreto;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -87,6 +88,8 @@ public class QuestionScreen extends AppCompatActivity {
                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                                 myDialog.dismiss();
                                 Toast.makeText(QuestionScreen.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(QuestionScreen.this, DashboardActivity.class);
+                                startActivity(intent);
 
                             }
                         })
