@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:padding="10dp"
             android:layout_alignBottom="@+id/questionText"
             android:layout_alignParentBottom="true"

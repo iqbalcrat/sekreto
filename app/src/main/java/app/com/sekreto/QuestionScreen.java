@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,7 +34,7 @@ public class QuestionScreen extends AppCompatActivity {
     private static final String TAG = "QuestionScreen";
     Dialog myDialog;
     private EditText questionText;
-    private Button button;
+    private FloatingActionButton button;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     // Access a Cloud Firestore instance from your Activity
