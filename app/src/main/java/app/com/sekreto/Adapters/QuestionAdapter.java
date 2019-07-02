@@ -1,7 +1,6 @@
 package app.com.sekreto.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import java.util.List;
 
 import app.com.sekreto.Models.Question;
-import app.com.sekreto.QuestionDetails;
 import app.com.sekreto.R;
 
 public class QuestionAdapter extends PagerAdapter {

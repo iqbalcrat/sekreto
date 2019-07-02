@@ -7,10 +7,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,16 +24,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Delayed;
 
 import javax.annotation.Nullable;
 
-import app.com.sekreto.Adapters.ItemAdapter;
 import app.com.sekreto.Adapters.QuestionAdapter;
-import app.com.sekreto.Models.Item;
 import app.com.sekreto.Models.Question;
-import app.com.sekreto.User.UserLogin;
-import app.com.sekreto.User.UserRegistration;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -64,7 +57,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // mAuth.getInstance().signOut();
                 //Toast.makeText(DashboardActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(DashboardActivity.this, QuestionScreen.class));
+                startActivity(new Intent(DashboardActivity.this, AskQuestion.class));
             }
         });
 

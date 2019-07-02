@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,15 +22,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.com.sekreto.User.ForgetPassword;
-
-public class QuestionScreen extends AppCompatActivity {
-    private static final String TAG = "QuestionScreen";
+public class AskQuestion extends AppCompatActivity {
+    private static final String TAG = "AskQuestion";
     Dialog myDialog;
     private EditText questionText;
     private FloatingActionButton button;
@@ -88,8 +84,8 @@ public class QuestionScreen extends AppCompatActivity {
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                                 myDialog.dismiss();
-                                Toast.makeText(QuestionScreen.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(QuestionScreen.this, DashboardActivity.class);
+                                Toast.makeText(AskQuestion.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(AskQuestion.this, DashboardActivity.class);
                                 startActivity(intent);
 
                             }
