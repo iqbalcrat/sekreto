@@ -59,10 +59,10 @@ public class QuestionAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, QuestionDetails.class);
-                intent.putExtra("param", models.get(position).getQuestion());
-                context.startActivity(intent);
-                // finish();
+                //Intent intent = new Intent(context, QuestionDetails.class);
+               // intent.putExtra("param", models.get(position).getQuestion());
+                //context.startActivity(intent);
+               // finish();
             }
         });
 
