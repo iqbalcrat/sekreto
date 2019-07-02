@@ -102,7 +102,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 Log.d(TAG, person);
                             }
                         }
-                        models.add(new Question(doc.getDocument().get("question").toString(), "Join Chat :" + person, R.drawable.anonymous));
+                        models.add(new Question(doc.getDocument().get("question").toString(), " " + person, R.drawable.anonymous));
                         Log.d(TAG, doc.getDocument().get("question").toString());
 
                     }
