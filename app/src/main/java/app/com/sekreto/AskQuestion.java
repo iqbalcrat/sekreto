@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -63,6 +64,12 @@ public class AskQuestion extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                if (TextUtils.isEmpty(myDialog.toString())){
+
+                    Toast.makeText(AskQuestion.this, "Please enter the question", Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
 
                 mAuth = FirebaseAuth.getInstance();
                 firebaseUser = mAuth.getCurrentUser();
