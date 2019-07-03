@@ -40,7 +40,7 @@ public class QuestionAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.activity_question_item, container, false);
+        View view = layoutInflater.inflate(R.layout.activity_question_card, container, false);
 
 
         TextView question, name;

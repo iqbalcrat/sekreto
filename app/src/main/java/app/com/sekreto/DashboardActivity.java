@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -42,6 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
     List<Question> models = new ArrayList<>();
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.dashboard_activity);
         askQuestion = findViewById(R.id.signout_btn);
         mAuth = FirebaseAuth.getInstance();
+        progressBar = findViewById(R.id.progressbar);
         firebaseUser = mAuth.getCurrentUser();
         //textView.append(firebaseUser.getEmail());
 
@@ -71,6 +74,7 @@ public class DashboardActivity extends AppCompatActivity {
                 viewPager = findViewById(R.id.viewPager);
                 viewPager.setAdapter(adapter);
                 viewPager.setPadding(130, 0, 130, 0);
+                progressBar.setVisibility(View.GONE);
             }
         }, 7500);
     }
