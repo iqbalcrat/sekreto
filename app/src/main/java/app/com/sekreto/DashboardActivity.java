@@ -1,24 +1,42 @@
 package app.com.sekreto;
 
 import android.animation.ArgbEvaluator;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +47,7 @@ import app.com.sekreto.Models.Question;
 public class DashboardActivity extends AppCompatActivity {
 
     private static final String TAG = "DashBoardActivity";
-    Button signOut;
-    Button askQuestion;
+    FloatingActionButton askQ;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -39,25 +56,25 @@ public class DashboardActivity extends AppCompatActivity {
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     ProgressBar progressBar;
+    Dialog myDialog;
+    private EditText questionText;
+    private FloatingActionButton button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
-        askQuestion = findViewById(R.id.signout_btn);
         mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressbar);
+        askQ = findViewById(R.id.askQ);
         firebaseUser = mAuth.getCurrentUser();
+        myDialog = new Dialog(this);
         //textView.append(firebaseUser.getEmail());
 
-        askQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // mAuth.getInstance().signOut();
-                //Toast.makeText(DashboardActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(DashboardActivity.this, AskQuestion.class));
-            }
-        });
 
         models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Join Chat", R.drawable.anonymous));
         getUpdatedList();
@@ -68,7 +85,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void run() {
                 viewPager = findViewById(R.id.viewPager);
                 viewPager.setAdapter(adapter);
-                viewPager.setPadding(130, 0, 130, 0);
+                viewPager.setPadding(100, 0, 100, 0);
                 progressBar.setVisibility(View.GONE);
             }
         }, 7500);
@@ -110,4 +127,74 @@ public class DashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListView.class);
         startActivity(intent);
     }
+
+
+    public void ShowPopup(View v) {
+        TextView txtclose;
+        myDialog.setContentView(R.layout.questionpopup);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("X");
+
+        questionText = myDialog.findViewById(R.id.questionText);
+        button = myDialog.findViewById(R.id.storeInDBButton);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(myDialog.toString())){
+
+                    Toast.makeText(DashboardActivity.this, "Please enter the question", Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
+
+                mAuth = FirebaseAuth.getInstance();
+                firebaseUser = mAuth.getCurrentUser();
+
+                Log.d(TAG , questionText.getText().toString());
+
+                Date d1 = new Date();
+                final Map<String, Object> question = new HashMap<>();
+                question.put("question", questionText.getText().toString());
+                question.put("User", firebaseUser);
+                question.put("Time",d1 );
+
+
+
+                db.collection("Questions")
+                        .add(question)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                myDialog.dismiss();
+                                Toast.makeText(DashboardActivity.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(DashboardActivity.this, DashboardActivity.class);
+                                startActivity(intent);
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+
+
+
+
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+
 }

@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/lightgrey</item>
         <item name="colorPrimaryDark">@color/lightgrey</item>
         <item name="colorAccent">@color/lightgrey</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
 </resources>
