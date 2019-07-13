@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
+
+import com.github.ybq.android.spinkit.style.CubeGrid;
+import com.github.ybq.android.spinkit.style.WanderingCubes;
 
 import app.com.sekreto.User.UserRegistration;
 
@@ -21,7 +25,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
 
-
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
+        CubeGrid doubleBounce = new CubeGrid();
+        progressBar.setIndeterminateDrawable(doubleBounce);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
