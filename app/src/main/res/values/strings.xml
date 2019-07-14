@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">sekreto</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="mangalagiri">I contested for an MLA position from mangalagiri in this elections but I thought the elections were on April 9th so I informed everyone to vote me on Aptil 9th. Alas to my surprise everyone voted for me on 9th and voted for RK on 13th ...majot shit happened bruh. Please join the chat and console me.....</string>
 </resources>
