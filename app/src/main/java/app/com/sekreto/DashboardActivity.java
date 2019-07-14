@@ -20,7 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -59,6 +63,8 @@ public class DashboardActivity extends AppCompatActivity {
     Dialog myDialog;
     private EditText questionText;
     private FloatingActionButton button;
+    private DrawerLayout drawer;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,14 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseUser = mAuth.getCurrentUser();
         myDialog = new Dialog(this);
         //textView.append(firebaseUser.getEmail());
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawer = findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
 
         models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Join Chat", R.drawable.anonymous));
@@ -193,5 +207,12 @@ public class DashboardActivity extends AppCompatActivity {
         myDialog.show();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

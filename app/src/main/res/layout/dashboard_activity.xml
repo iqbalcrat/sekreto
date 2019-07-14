@@ -55,7 +55,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:foregroundGravity="center"
-        android:overScrollMode="never"></androidx.viewpager.widget.ViewPager>
+        android:overScrollMode="always"></androidx.viewpager.widget.ViewPager>
 
     <Button
         android:id="@+id/myQuestions"
