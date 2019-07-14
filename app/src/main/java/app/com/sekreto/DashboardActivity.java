@@ -43,6 +43,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import app.com.sekreto.Adapters.QuestionAdapter;
 import app.com.sekreto.Models.Question;
+import app.com.sekreto.friendlychat.MainActivity;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -127,6 +128,13 @@ public class DashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListView.class);
         startActivity(intent);
     }
+
+    public void goToChat(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+
 
 
     public void ShowPopup(View v) {
