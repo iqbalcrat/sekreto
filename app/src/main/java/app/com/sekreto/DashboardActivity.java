@@ -72,8 +72,8 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
         mAuth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.progressbar);
-        askQ = findViewById(R.id.askQ);
+        //progressBar = findViewById(R.id.progressbar);
+        //askQ = findViewById(R.id.askQ);
         firebaseUser = mAuth.getCurrentUser();
         myDialog = new Dialog(this);
         //textView.append(firebaseUser.getEmail());
@@ -97,7 +97,7 @@ public class DashboardActivity extends AppCompatActivity {
                 viewPager = findViewById(R.id.viewPager);
                 viewPager.setAdapter(adapter);
                 viewPager.setPadding(100, 0, 100, 0);
-                progressBar.setVisibility(View.GONE);
+                //progressBar.setVisibility(View.GONE);
             }
         }, 7500);
     }
