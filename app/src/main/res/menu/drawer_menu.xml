@@ -5,13 +5,18 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_ques"
+            android:icon="@drawable/ic_question"
+            android:title="My Questions" />
+        <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_android"
+            android:icon="@drawable/ic_man"
             android:title="Profile" />
         <item
             android:id="@+id/nav_notif"
             android:icon="@drawable/ic_android"
             android:title="Notifications" />
+
 
     </group>
 
@@ -19,19 +24,19 @@
         <menu>
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_android"
+                android:icon="@drawable/ic_settings"
                 android:title="Settings" />
             <item
                 android:id="@+id/nav_help"
-                android:icon="@drawable/ic_android"
+                android:icon="@drawable/ic_help"
                 android:title="Help Center" />
             <item
                 android:id="@+id/nav_feedback"
-                android:icon="@drawable/ic_android"
+                android:icon="@drawable/ic_rating"
                 android:title="Feedback" />
             <item
                 android:id="@+id/nav_about"
-                android:icon="@drawable/ic_android"
+                android:icon="@drawable/ic_love"
                 android:title="About" />
         </menu>
     </item>

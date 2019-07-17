@@ -30,6 +30,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -67,6 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
+   NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,9 @@ public class DashboardActivity extends AppCompatActivity {
         //textView.append(firebaseUser.getEmail());
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        navigationView =(NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
+
 
         drawer = findViewById(R.id.drawer_layout);
 
