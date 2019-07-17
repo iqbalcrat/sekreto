@@ -32,10 +32,13 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-            <FrameLayout
-                android:id="@+id/fragment_container"
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:foregroundGravity="center"
+                android:overScrollMode="always"></androidx.viewpager.widget.ViewPager>
 
         </LinearLayout>
 
@@ -47,13 +50,7 @@
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_menu" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:foregroundGravity="center"
-            android:overScrollMode="always"></androidx.viewpager.widget.ViewPager>
+
 
 
 

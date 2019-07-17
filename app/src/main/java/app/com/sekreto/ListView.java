@@ -1,9 +1,12 @@
 package app.com.sekreto;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -43,6 +46,8 @@ public class ListView extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
+    private DrawerLayout drawer;
+    Toolbar toolbar;
 
 
 
@@ -60,6 +65,13 @@ public class ListView extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ItemAdapter(mItemList);
         mRecyclerView.setAdapter(mAdapter);
+
+
+        drawer = findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
        /* mAdapter.setOnItemClickListner(new ItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -118,5 +130,13 @@ public class ListView extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

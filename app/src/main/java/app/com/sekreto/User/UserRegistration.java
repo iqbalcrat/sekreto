@@ -76,7 +76,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                 if(firebaseAuth.getCurrentUser()!= null)
                 {
                     Log.d(TAG, "User is already logged in");
-                    startActivity(new Intent(UserRegistration.this, ListView.class));
+                    startActivity(new Intent(UserRegistration.this, DashboardActivity.class));
                     finish();
                 }
             }

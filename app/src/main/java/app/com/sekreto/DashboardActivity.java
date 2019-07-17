@@ -65,6 +65,7 @@ public class DashboardActivity extends AppCompatActivity {
     private FloatingActionButton button;
     private DrawerLayout drawer;
     Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
