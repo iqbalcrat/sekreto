@@ -44,7 +44,12 @@
                     android:layout_height="50dp"
                     android:layout_below="@id/title"
                     android:padding="2dp"
-                    android:src="@drawable/ic_launcher_background"></de.hdodenhof.circleimageview.CircleImageView>
+                    android:src="@drawable/profilepic"></de.hdodenhof.circleimageview.CircleImageView>
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/name"
@@ -57,15 +62,24 @@
                     android:textColor="#262626"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+               <TextView
+                   android:id="@+id/collegename"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="16dp"
+                   android:text="RGUKT - RK Valley"/>
+
+               </LinearLayout>
 
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="45dp"
                 android:layout_below="@+id/question"
-                android:layout_marginTop="75dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="85dp"
                 android:background="@drawable/round"
                 android:orientation="horizontal">
 
@@ -75,31 +89,33 @@
                     android:background="@drawable/round"
                     android:clickable="true"
                     app:cardCornerRadius="5dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        >
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="Time"
-                        android:textAlignment="center" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center_vertical"
                             android:layout_weight="1"
-                            android:text="Num"
+                            android:gravity="center_vertical"
+                            android:text="13 mins"
                             android:textAlignment="center" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="6 members"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:background="@drawable/round"
                             android:gravity="center_vertical"
-                            android:layout_weight="1"
                             android:text="JOIN CHAT"
                             android:textAlignment="center" />
                     </LinearLayout>

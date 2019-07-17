@@ -39,8 +39,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         public ItemViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             mProfilePic = itemView.findViewById(R.id.profile_image);
-            mTextView1 = itemView.findViewById(R.id.textView1);
-            mTextView2 = itemView.findViewById(R.id.textView2);
+            mTextView1 = itemView.findViewById(R.id.question);
+            mTextView2 = itemView.findViewById(R.id.name);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

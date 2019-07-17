@@ -53,8 +53,6 @@ public class ListView extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         my_toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(my_toolbar);
-        getSupportActionBar().setTitle("Your Questions");
         getUpdatedList();
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(false);
@@ -62,7 +60,7 @@ public class ListView extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ItemAdapter(mItemList);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListner(new ItemAdapter.OnItemClickListener() {
+       /* mAdapter.setOnItemClickListner(new ItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
@@ -70,7 +68,7 @@ public class ListView extends AppCompatActivity {
                 mAdapter.notifyItemChanged(position);
 
             }
-        });
+        });*/
 
 
     }
@@ -96,7 +94,7 @@ public class ListView extends AppCompatActivity {
                             Map<String, Object> user =(HashMap<String,Object>) doc.getDocument().get("User");
                             Log.d(TAG, user.toString());
                             if(firebaseUser.getEmail().contentEquals(user.get("email").toString())){
-                                mItemList.add(new Item(R.drawable.ic_sun, doc.getDocument().get("question").toString(), "Answers : 0" ));
+                                mItemList.add(new Item(R.drawable.profilepic, doc.getDocument().get("question").toString(), "Answers : 0" ));
                                 Log.d(TAG, doc.getDocument().get("question").toString());
 
                             }
@@ -106,7 +104,7 @@ public class ListView extends AppCompatActivity {
                 }
                 mAdapter = new ItemAdapter(mItemList);
                 mRecyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListner(new ItemAdapter.OnItemClickListener() {
+               /* mAdapter.setOnItemClickListner(new ItemAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
 
@@ -115,7 +113,7 @@ public class ListView extends AppCompatActivity {
 
                     }
                 });
-
+*/
 
             }
         });

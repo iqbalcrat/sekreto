@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import app.com.sekreto.DashboardActivity;
+import app.com.sekreto.ListView;
 import app.com.sekreto.R;
 
 public class UserRegistration extends AppCompatActivity implements View.OnClickListener {
@@ -75,7 +76,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                 if(firebaseAuth.getCurrentUser()!= null)
                 {
                     Log.d(TAG, "User is already logged in");
-                    startActivity(new Intent(UserRegistration.this, DashboardActivity.class));
+                    startActivity(new Intent(UserRegistration.this, ListView.class));
                     finish();
                 }
             }

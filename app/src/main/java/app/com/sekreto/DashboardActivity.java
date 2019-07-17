@@ -87,7 +87,7 @@ public class DashboardActivity extends AppCompatActivity {
         toggle.syncState();
 
 
-        models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Join Chat", R.drawable.anonymous));
+        models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Nara Lokesh", R.drawable.profilepic));
         getUpdatedList();
         final QuestionAdapter adapter = new QuestionAdapter(models, this);
         Handler delayHandler = new Handler();
@@ -122,7 +122,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 Log.d(TAG, person);
                             }
                         }
-                        models.add(new Question(doc.getDocument().get("question").toString(), " " + person, R.drawable.anonymous));
+                        models.add(new Question(doc.getDocument().get("question").toString(), " " + person,  R.drawable.profilepic));
                         Log.d(TAG, doc.getDocument().get("question").toString());
 
                     }
