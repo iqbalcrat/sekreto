@@ -76,6 +76,7 @@ public class ListView extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
 
+                Log.d(TAG, "CLICKED IN ONCREATE");
                 mItemList.get(position).changeText1("clicked");
                 mAdapter.notifyItemChanged(position);
 
@@ -120,6 +121,7 @@ public class ListView extends AppCompatActivity {
                     @Override
                     public void onItemClick(int position) {
 
+                        Log.d(TAG, "CLICKED IN GETUPDATED LIST");
                         mItemList.get(position).changeText1("clicked");
                         mAdapter.notifyItemChanged(position);
 
