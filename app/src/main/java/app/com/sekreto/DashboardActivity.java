@@ -70,6 +70,7 @@ public class DashboardActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
    NavigationView navigationView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -107,6 +108,8 @@ public class DashboardActivity extends AppCompatActivity {
                 //progressBar.setVisibility(View.GONE);
             }
         }, 7500);
+
+
     }
 
     public void getUpdatedList() {
@@ -229,4 +232,5 @@ public class DashboardActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }

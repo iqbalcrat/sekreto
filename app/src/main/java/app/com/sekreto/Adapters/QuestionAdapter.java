@@ -44,6 +44,7 @@ public class QuestionAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
