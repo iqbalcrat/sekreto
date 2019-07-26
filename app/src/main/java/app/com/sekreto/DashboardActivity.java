@@ -62,7 +62,7 @@ public class DashboardActivity extends AppCompatActivity {
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     ProgressBar progressBar;
-    Dialog myDialog;
+
     private EditText questionText;
     private FloatingActionButton button;
     private DrawerLayout drawer;
@@ -77,10 +77,19 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
         mAuth = FirebaseAuth.getInstance();
+
+        askQ =  findViewById(R.id.askQ);
+        askQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, AskQuestion.class));
+            }
+        });
+
         //progressBar = findViewById(R.id.progressbar);
         //askQ = findViewById(R.id.askQ);
         firebaseUser = mAuth.getCurrentUser();
-        myDialog = new Dialog(this);
+
         //textView.append(firebaseUser.getEmail());
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -157,72 +166,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
-    public void ShowPopup(View v) {
-        TextView txtclose;
-        myDialog.setContentView(R.layout.questionpopup);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("X");
 
-        questionText = myDialog.findViewById(R.id.questionText);
-        button = myDialog.findViewById(R.id.storeInDBButton);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        button.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                if (TextUtils.isEmpty(myDialog.toString())){
-
-                    Toast.makeText(DashboardActivity.this, "Please enter the question", Toast.LENGTH_SHORT).show();
-                    return;
-
-                }
-
-                mAuth = FirebaseAuth.getInstance();
-                firebaseUser = mAuth.getCurrentUser();
-
-                Log.d(TAG , questionText.getText().toString());
-
-                Date d1 = new Date();
-                final Map<String, Object> question = new HashMap<>();
-                question.put("question", questionText.getText().toString());
-                question.put("User", firebaseUser);
-                question.put("Time",d1 );
-
-
-
-                db.collection("Questions")
-                        .add(question)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                myDialog.dismiss();
-                                Toast.makeText(DashboardActivity.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(DashboardActivity.this, DashboardActivity.class);
-                                startActivity(intent);
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-
-
-
-
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-    }
 
     @Override
     public void onBackPressed() {

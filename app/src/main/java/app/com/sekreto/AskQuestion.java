@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.allyants.chipview.ChipView;
+import com.allyants.chipview.SimpleChipAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +37,7 @@ public class AskQuestion extends AppCompatActivity {
     private FloatingActionButton button;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
+    ChipView mChipView;
     // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -42,35 +46,18 @@ public class AskQuestion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_screen);
-        myDialog = new Dialog(this);
+        //myDialog = new Dialog(this);
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
+        mChipView = findViewById(R.id.cvTag);
+        this.populateTags();
+        questionText = findViewById(R.id.questionText);
+        button = findViewById(R.id.storeInDBButton);
 
-    }
-
-    public void ShowPopup(View v) {
-        TextView txtclose;
-        myDialog.setContentView(R.layout.questionpopup);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("X");
-
-        questionText = myDialog.findViewById(R.id.questionText);
-        button = myDialog.findViewById(R.id.storeInDBButton);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
         button.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(myDialog.toString())){
-
-                    Toast.makeText(AskQuestion.this, "Please enter the question", Toast.LENGTH_SHORT).show();
-                    return;
-
-                }
-
                 mAuth = FirebaseAuth.getInstance();
                 firebaseUser = mAuth.getCurrentUser();
 
@@ -109,9 +96,23 @@ public class AskQuestion extends AppCompatActivity {
 
             }
         });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
+
+
+
     }
 
+private void populateTags(){
+        ArrayList tags = new ArrayList();
+        tags.add("CSE");
+    tags.add("ECE");
+    tags.add("EEE");
+    tags.add("MECH");
+    tags.add("CIVIL");
+    tags.add("CHEM");
+    tags.add("MME");
+    SimpleChipAdapter adapter =  new SimpleChipAdapter(tags);
+    mChipView.setAdapter(adapter);
 
+
+}
 }

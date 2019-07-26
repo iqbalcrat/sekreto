@@ -64,7 +64,6 @@
 
     </androidx.drawerlayout.widget.DrawerLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:onClick="ShowPopup"
         android:id="@+id/askQ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
