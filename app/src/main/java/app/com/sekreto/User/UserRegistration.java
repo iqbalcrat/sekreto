@@ -21,11 +21,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 import app.com.sekreto.DashboardActivity;
 import app.com.sekreto.ListView;
+import app.com.sekreto.Models.User;
 import app.com.sekreto.R;
 
 public class UserRegistration extends AppCompatActivity implements View.OnClickListener {
@@ -165,11 +169,30 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Creation of user is successfull");
                             //saving user data to the database
-                            UsersInfo usersInfo = new UsersInfo(uname, email);
-                            String id = myRef.push().getKey();
-                            myRef.child(id).setValue(usersInfo);
-                            Toast.makeText(UserRegistration.this, "Registration is successful.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(UserRegistration.this, DashboardActivity.class));
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                            assert firebaseUser != null;
+                            Log.d("RegisterActivity", "Firebase user:" + firebaseUser.toString());
+                            String userid = firebaseUser.getUid();
+
+                            myRef = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id", userid);
+                            hashMap.put("username", email);
+                            hashMap.put("imageURL", "default");
+                            
+                            myRef.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Intent intent = new Intent(UserRegistration.this, DashboardActivity.class);
+                                        Toast.makeText(UserRegistration.this, "Registration is successful.", Toast.LENGTH_SHORT).show();
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+                            });
 
 
                         } else {

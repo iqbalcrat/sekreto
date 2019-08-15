@@ -15,17 +15,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import app.com.sekreto.Models.Chat;
 
 public class AskQuestion extends AppCompatActivity {
     private static final String TAG = "AskQuestion";
@@ -35,7 +41,8 @@ public class AskQuestion extends AppCompatActivity {
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     // Access a Cloud Firestore instance from your Activity
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DatabaseReference reference;
 
 
     @Override
@@ -82,27 +89,36 @@ public class AskQuestion extends AppCompatActivity {
                 question.put("User", firebaseUser);
                 question.put("Time",d1 );
 
+                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                String userId = firebaseUser.getUid();
 
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("id", userId);
+                hashMap.put("title", questionText.getText().toString());
+                hashMap.put("admin", userId);
 
-                db.collection("Questions")
-                        .add(question)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                myDialog.dismiss();
-                                Toast.makeText(AskQuestion.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(AskQuestion.this, DashboardActivity.class);
-                                startActivity(intent);
+                reference.child("Chats").push().setValue(hashMap);
 
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
+//                db.collection("Questions")
+//                        .add(question)
+//                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                            @Override
+//                            public void onSuccess(DocumentReference documentReference) {
+//                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                                myDialog.dismiss();
+//                                Toast.makeText(AskQuestion.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
+//                                Intent intent = new Intent(AskQuestion.this, DashboardActivity.class);
+//                                startActivity(intent);
+//
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Log.w(TAG, "Error adding document", e);
+//                            }
+//                        });
 
 
 

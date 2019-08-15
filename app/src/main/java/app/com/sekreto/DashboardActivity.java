@@ -33,6 +33,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,6 +49,8 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import app.com.sekreto.Adapters.QuestionAdapter;
+import app.com.sekreto.Models.Chat;
+import app.com.sekreto.Models.Members;
 import app.com.sekreto.Models.Question;
 import app.com.sekreto.friendlychat.MainActivity;
 
@@ -190,6 +194,18 @@ public class DashboardActivity extends AppCompatActivity {
                 question.put("User", firebaseUser);
                 question.put("Time",d1 );
 
+                String userId = firebaseUser.getUid();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                String pushId = reference.child("Chats").push().getKey();
+                addQuestionToChatModel(reference, new Chat(pushId, questionText.getText().toString(), userId));
+
+                DatabaseReference memberRef = FirebaseDatabase.getInstance().getReference("Members").child(pushId);
+
+                HashMap<String,String> memberMap = new HashMap<>();
+                memberMap.put("id", pushId);
+                memberMap.put("userId", userId);
+
+                memberRef.child(userId).setValue(memberMap);
 
 
                 db.collection("Questions")
@@ -220,6 +236,20 @@ public class DashboardActivity extends AppCompatActivity {
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
     }
+
+    private void addQuestionToChatModel(DatabaseReference reference, Chat chat){
+
+        reference.child("Chats").child(chat.getId()).setValue(chat);
+
+    }
+
+    private void addMemberToChatModel(DatabaseReference reference, Members members){
+
+
+
+    }
+
+
 
     @Override
     public void onBackPressed() {

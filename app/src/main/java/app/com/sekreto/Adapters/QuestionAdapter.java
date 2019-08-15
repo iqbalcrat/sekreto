@@ -17,6 +17,7 @@ import java.util.List;
 
 import app.com.sekreto.DashboardActivity;
 import app.com.sekreto.ListView;
+import app.com.sekreto.MessageActivity;
 import app.com.sekreto.Models.Question;
 import app.com.sekreto.R;
 import app.com.sekreto.friendlychat.MainActivity;
@@ -67,10 +68,9 @@ public class QuestionAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(context, QuestionDetails.class);
-               // intent.putExtra("param", models.get(position).getQuestion());
-                //context.startActivity(intent);
-               // finish();
+                Intent intent = new Intent(context, MessageActivity.class);
+                intent.putExtra("userid", models.get(position).getName() );
+                context.startActivity(intent);
                 Log.d(TAG, "QuestionAdapater-> view.setOnClickListener");
 
             }

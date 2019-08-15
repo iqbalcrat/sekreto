@@ -19,6 +19,7 @@
         <activity android:name=".User.UserProfile" />
         <activity android:name=".User.ForgetPassword" />
         <activity android:name=".User.UserRegistration" />
+        <activity android:name=".MessageActivity"/>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
