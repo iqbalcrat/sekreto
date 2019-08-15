@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -78,9 +79,10 @@ public class MessageActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        final String userid = intent.getStringExtra("userid");
+        final String chatId = intent.getStringExtra("chatId");
+        Log.d("MessageActivity", "Chat Id:" + chatId);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        username.setText(userid);
+        username.setText(fuser.getEmail().split("@")[0]);
         profile_image.setImageResource(R.drawable.profilepic);
 
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +90,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String msg = text_send.getText().toString();
                 if(!msg.equals("")){
-                    sendMessage(fuser.getUid(), userid, msg);
+                    sendMessage(fuser.getUid(), chatId, msg);
                 }else{
                     Toast.makeText(MessageActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
                 }
@@ -124,15 +126,16 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    private void sendMessage(String sender, String receiver, String message){
+    private void sendMessage(String sender, String chatId, String message){
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        DatabaseReference memberRef = FirebaseDatabase.getInstance().getReference("messages").child(chatId);
+
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
-        hashMap.put("receiver", receiver);
+        hashMap.put("receiver", chatId);
         hashMap.put("message", message);
-
-        reference.child("messages").push().setValue(hashMap);
+        memberRef.push().setValue(hashMap);
     }
 
 

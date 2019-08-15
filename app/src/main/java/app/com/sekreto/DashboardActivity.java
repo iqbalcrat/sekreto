@@ -33,8 +33,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -45,6 +48,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -63,6 +67,7 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ViewPager viewPager;
     List<Question> models = new ArrayList<>();
+    List<Chat> chatModels = new ArrayList<>();
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     ProgressBar progressBar;
@@ -98,9 +103,10 @@ public class DashboardActivity extends AppCompatActivity {
         toggle.syncState();
 
 
-        models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Nara Lokesh", R.drawable.profilepic));
+        //models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Nara Lokesh", R.drawable.profilepic));
         getUpdatedList();
-        final QuestionAdapter adapter = new QuestionAdapter(models, this);
+        Log.d(TAG, "chat Models" + chatModels.toString() );
+        final QuestionAdapter adapter = new QuestionAdapter(models, chatModels,this);
         Handler delayHandler = new Handler();
         delayHandler.postDelayed(new Runnable() {
             @Override
@@ -114,6 +120,34 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void getUpdatedList() {
+
+
+
+        DatabaseReference questionRef = FirebaseDatabase.getInstance().getReference().child("Chats");
+        questionRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterator iterator = dataSnapshot.getChildren().iterator();
+                while (iterator.hasNext()){
+                    String id = ((DataSnapshot)iterator.next()).getKey();
+                    Log.d(TAG, "Chat id in iterator:" + id);
+                    chatModels.add(new Chat(id, "",""));
+                }
+
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    String chatID = dataSnapshot.getKey();
+                    Log.d(TAG, "Chat id in forloop:" + chatID);
+                    Chat chat = dataSnapshot.child(chatID).getValue(Chat.class);
+                    //chatModels.add(chat);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         CollectionReference listenerRegistration = db.collection("Questions");
         listenerRegistration.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -197,17 +231,15 @@ public class DashboardActivity extends AppCompatActivity {
                 String userId = firebaseUser.getUid();
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 String pushId = reference.child("Chats").push().getKey();
+                /*Insert data into Chat Node*/
                 addQuestionToChatModel(reference, new Chat(pushId, questionText.getText().toString(), userId));
-
+                /*************Insert data into Member node***********/
                 DatabaseReference memberRef = FirebaseDatabase.getInstance().getReference("Members").child(pushId);
-
                 HashMap<String,String> memberMap = new HashMap<>();
                 memberMap.put("id", pushId);
                 memberMap.put("userId", userId);
-
                 memberRef.child(userId).setValue(memberMap);
-
-
+                /***********Insert data into Member node***********/
                 db.collection("Questions")
                         .add(question)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
