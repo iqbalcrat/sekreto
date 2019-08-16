@@ -50,6 +50,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import javax.annotation.Nullable;
 import app.com.sekreto.Adapters.QuestionAdapter;
@@ -132,6 +133,16 @@ public class DashboardActivity extends AppCompatActivity {
                     String id = ((DataSnapshot)iterator.next()).getKey();
                     Log.d(TAG, "Chat id in iterator:" + id);
                     chatModels.add(new Chat(id, "",""));
+
+
+                }
+
+                Iterator iterator1 = dataSnapshot.getChildren().iterator();
+
+                while(iterator1.hasNext()){
+                    Chat chat = ((DataSnapshot)iterator1.next()).getValue(Chat.class);
+                    models.add(new Question(chat.getTitle(), firebaseUser.getEmail().split("@")[0],  R.drawable.profilepic));
+                    Log.d("Get question Names:" ,chat.toString() );
                 }
 
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
@@ -167,7 +178,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 Log.d(TAG, person);
                             }
                         }
-                        models.add(new Question(doc.getDocument().get("question").toString(), " " + person,  R.drawable.profilepic));
+                       // models.add(new Question(doc.getDocument().get("question").toString(), " " + person,  R.drawable.profilepic));
                         Log.d(TAG, doc.getDocument().get("question").toString());
 
                     }

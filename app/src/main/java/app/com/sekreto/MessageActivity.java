@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import app.com.sekreto.Adapters.MessageAdapter;
+import app.com.sekreto.Models.Messages;
 import app.com.sekreto.Models.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -41,6 +43,9 @@ public class MessageActivity extends AppCompatActivity {
 
     ImageButton btn_send;
     EditText text_send;
+
+    MessageAdapter messageAdapter;
+    List<Messages> mChat;
 
     RecyclerView recyclerView;
 
@@ -98,6 +103,15 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+        readMessages(chatId);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MessageActivity.this, "These are the list of Members", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 //        reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 //
 //        reference.addValueEventListener(new ValueEventListener() {
@@ -136,6 +150,63 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("receiver", chatId);
         hashMap.put("message", message);
         memberRef.push().setValue(hashMap);
+    }
+
+
+    private void readMessages(final String chatId){
+        mChat = new ArrayList<>();
+
+        reference = FirebaseDatabase.getInstance().getReference("messages");
+        reference.child(chatId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mChat.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Log.d("User Id", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    Log.d("PChatKey:" , snapshot.getKey());
+                   // Log.d("PChat:" , snapshot.getValue().toString());
+                    Messages messages = snapshot.getValue(Messages.class);
+                    Log.d("messageModel", messages.toString());
+                    mChat.add(messages);
+                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat, "default");
+                    recyclerView.setAdapter(messageAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                mChat.clear();
+//                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+//
+//                    Log.d("User Id", FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                    Log.d("Chat Key:" , snapshot.getKey());
+//                    Log.d("Chats:" , snapshot.getValue().toString());
+////                    Messages chat = snapshot.getValue(Messages.class);
+////                    Log.d("MessageActivity:" , chat.toString());
+////                    if(chat.getAuthor().equals(myid) && chat.getSender().equals(userid)||
+////                            chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
+////                        mChat.add(chat);
+////                    }
+////
+////                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat, imageurl);
+////                    recyclerView.setAdapter(messageAdapter);
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
 

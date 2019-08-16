@@ -67,7 +67,6 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
         register.setOnClickListener(this);
         direct_login.setOnClickListener(this);
         myRef = FirebaseDatabase.getInstance().getReference("Users");
-        mAuth = FirebaseAuth.getInstance();
         database= FirebaseDatabase.getInstance();
 
         Log.d(TAG, "Entered into OnCreate");
@@ -173,7 +172,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
                             assert firebaseUser != null;
                             Log.d("RegisterActivity", "Firebase user:" + firebaseUser.toString());
                             String userid = firebaseUser.getUid();
-
+                            Log.d("RegisterActivity", "User Id" + userid);
                             myRef = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
                             HashMap<String, String> hashMap = new HashMap<>();

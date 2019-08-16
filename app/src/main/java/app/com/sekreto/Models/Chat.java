@@ -40,5 +40,12 @@ public class Chat {
         this.admin = admin;
     }
 
-
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", admin='" + admin + '\'' +
+                '}';
+    }
 }

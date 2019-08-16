@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private static final String TAG = "MainActivity";
-    public static final String MESSAGES_CHILD = "messages";
+    public static final String MESSAGES_CHILD = "Messages";
     private static final int REQUEST_INVITE = 1;
     private static final int REQUEST_IMAGE = 2;
     private static final String LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif";
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Send messages on click.
+                // Send Messages on click.
             }
         });
 
