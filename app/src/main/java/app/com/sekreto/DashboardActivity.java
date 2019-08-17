@@ -5,15 +5,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -50,14 +46,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import javax.annotation.Nullable;
 import app.com.sekreto.Adapters.QuestionAdapter;
 import app.com.sekreto.Models.Chat;
 import app.com.sekreto.Models.Members;
 import app.com.sekreto.Models.Question;
-import app.com.sekreto.friendlychat.MainActivity;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -117,12 +111,10 @@ public class DashboardActivity extends AppCompatActivity {
                 viewPager.setPadding(100, 0, 100, 0);
                 //progressBar.setVisibility(View.GONE);
             }
-        }, 7500);
+        }, 3000);
     }
 
     public void getUpdatedList() {
-
-
 
         DatabaseReference questionRef = FirebaseDatabase.getInstance().getReference().child("Chats");
         questionRef.addValueEventListener(new ValueEventListener() {
@@ -145,45 +137,11 @@ public class DashboardActivity extends AppCompatActivity {
                     Log.d("Get question Names:" ,chat.toString() );
                 }
 
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    String chatID = dataSnapshot.getKey();
-                    Log.d(TAG, "Chat id in forloop:" + chatID);
-                    Chat chat = dataSnapshot.child(chatID).getValue(Chat.class);
-                    //chatModels.add(chat);
-                }
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-        CollectionReference listenerRegistration = db.collection("Questions");
-        listenerRegistration.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                List<DocumentChange> docChanges = queryDocumentSnapshots.getDocumentChanges();
-                Log.d(TAG, "No of changes: " + docChanges.size());
-                for (DocumentChange doc : docChanges) {
-
-                    if (doc.getDocument().getData().containsKey("question")) {
-                        String person = "Anonymous";
-                        if (doc.getDocument().getData().containsKey("User")){
-                            Map<String, Object> user = (HashMap)doc.getDocument().get("User");
-                            if(user.containsKey("email")){
-                                person = user.get("email").toString().split("@")[0];
-                                Log.d(TAG, person);
-                            }
-                        }
-                       // models.add(new Question(doc.getDocument().get("question").toString(), " " + person,  R.drawable.profilepic));
-                        Log.d(TAG, doc.getDocument().get("question").toString());
-
-                    }
-
-                }
             }
         });
 
@@ -194,13 +152,6 @@ public class DashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListView.class);
         startActivity(intent);
     }
-
-    public void goToChat(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-
 
 
     public void ShowPopup(View v) {
@@ -249,7 +200,12 @@ public class DashboardActivity extends AppCompatActivity {
                 HashMap<String,String> memberMap = new HashMap<>();
                 memberMap.put("id", pushId);
                 memberMap.put("userId", userId);
-                memberRef.child(userId).setValue(memberMap);
+                memberRef.child(userId).setValue(memberMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(DashboardActivity.this, "Member added", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 /***********Insert data into Member node***********/
                 db.collection("Questions")
                         .add(question)

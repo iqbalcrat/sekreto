@@ -21,13 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.List;
 
-import app.com.sekreto.DashboardActivity;
-import app.com.sekreto.ListView;
 import app.com.sekreto.MessageActivity;
 import app.com.sekreto.Models.Chat;
 import app.com.sekreto.Models.Question;
 import app.com.sekreto.R;
-import app.com.sekreto.friendlychat.MainActivity;
+
 
 public class QuestionAdapter extends PagerAdapter {
 
@@ -39,6 +37,8 @@ public class QuestionAdapter extends PagerAdapter {
     FirebaseUser firebaseUser;
     private static final String TAG = "QuestionAdapter";
     private DatabaseReference reference;
+    private boolean doNotifyDataSetChangedOnce = false;
+
 
     public QuestionAdapter(List<Question> models, List<Chat> chatModels,Context context) {
         this.models = models;
@@ -48,6 +48,8 @@ public class QuestionAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
+
+
         return models.size();
     }
 
@@ -70,7 +72,6 @@ public class QuestionAdapter extends PagerAdapter {
         profilePic = view.findViewById(R.id.profile_image);
         question = view.findViewById(R.id.question);
         name = view.findViewById(R.id.name);
-        button = view.findViewById(R.id.joinChat);
 
         profilePic.setImageResource(models.get(position).getProfilePic());
         question.setText(models.get(position).getQuestion());
