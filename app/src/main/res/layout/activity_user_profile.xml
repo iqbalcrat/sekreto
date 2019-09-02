@@ -141,29 +141,29 @@
             android:orientation="vertical"
             android:padding="25dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_email">
-            </ImageView>
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textAlignment="textStart"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="\iqbalhonnur@gmail.com"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_email">
+                </ImageView>
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="\iqbalhonnur@gmail.com"
+                    />
 
 
 
 
-        </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

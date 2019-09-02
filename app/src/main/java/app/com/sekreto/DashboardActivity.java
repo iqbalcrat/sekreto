@@ -5,15 +5,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,6 +29,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -43,12 +44,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import app.com.sekreto.Adapters.QuestionAdapter;
+import app.com.sekreto.Models.Chat;
+import app.com.sekreto.Models.Members;
 import app.com.sekreto.Models.Question;
-import app.com.sekreto.friendlychat.MainActivity;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -59,10 +62,11 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ViewPager viewPager;
     List<Question> models = new ArrayList<>();
+    List<Chat> chatModels = new ArrayList<>();
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     ProgressBar progressBar;
-
+    Dialog myDialog;
     private EditText questionText;
     private FloatingActionButton button;
     private DrawerLayout drawer;
@@ -70,14 +74,14 @@ public class DashboardActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
    NavigationView navigationView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
         mAuth = FirebaseAuth.getInstance();
-
+        //progressBar = findViewById(R.id.progressbar);
+        askQ = findViewById(R.id.askQ);
         askQ =  findViewById(R.id.askQ);
         askQ.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +90,9 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        //progressBar = findViewById(R.id.progressbar);
-        //askQ = findViewById(R.id.askQ);
-        firebaseUser = mAuth.getCurrentUser();
 
+        firebaseUser = mAuth.getCurrentUser();
+        myDialog = new Dialog(this);
         //textView.append(firebaseUser.getEmail());
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,9 +107,10 @@ public class DashboardActivity extends AppCompatActivity {
         toggle.syncState();
 
 
-        models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Nara Lokesh", R.drawable.profilepic));
+        //models.add(new Question("I contested for an MLA position from mangalagiri in this elections but I ...", "Nara Lokesh", R.drawable.profilepic));
         getUpdatedList();
-        final QuestionAdapter adapter = new QuestionAdapter(models, this);
+        Log.d(TAG, "chat Models" + chatModels.toString() );
+        final QuestionAdapter adapter = new QuestionAdapter(models, chatModels,this);
         Handler delayHandler = new Handler();
         delayHandler.postDelayed(new Runnable() {
             @Override
@@ -116,37 +120,37 @@ public class DashboardActivity extends AppCompatActivity {
                 viewPager.setPadding(100, 0, 100, 0);
                 //progressBar.setVisibility(View.GONE);
             }
-        }, 7500);
-
-
+        }, 3000);
     }
 
     public void getUpdatedList() {
 
-        CollectionReference listenerRegistration = db.collection("Questions");
-        listenerRegistration.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        DatabaseReference questionRef = FirebaseDatabase.getInstance().getReference().child("Chats");
+        questionRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterator iterator = dataSnapshot.getChildren().iterator();
+                while (iterator.hasNext()){
+                    String id = ((DataSnapshot)iterator.next()).getKey();
+                    Log.d(TAG, "Chat id in iterator:" + id);
+                    chatModels.add(new Chat(id, "",""));
 
-                List<DocumentChange> docChanges = queryDocumentSnapshots.getDocumentChanges();
-                Log.d(TAG, "No of changes: " + docChanges.size());
-                for (DocumentChange doc : docChanges) {
-
-                    if (doc.getDocument().getData().containsKey("question")) {
-                        String person = "Anonymous";
-                        if (doc.getDocument().getData().containsKey("User")){
-                            Map<String, Object> user = (HashMap)doc.getDocument().get("User");
-                            if(user.containsKey("email")){
-                                person = user.get("email").toString().split("@")[0];
-                                Log.d(TAG, person);
-                            }
-                        }
-                        models.add(new Question(doc.getDocument().get("question").toString(), " " + person,  R.drawable.profilepic));
-                        Log.d(TAG, doc.getDocument().get("question").toString());
-
-                    }
 
                 }
+
+                Iterator iterator1 = dataSnapshot.getChildren().iterator();
+
+                while(iterator1.hasNext()){
+                    Chat chat = ((DataSnapshot)iterator1.next()).getValue(Chat.class);
+                    models.add(new Question(chat.getTitle(), firebaseUser.getEmail().split("@")[0],  R.drawable.profilepic));
+                    Log.d("Get question Names:" ,chat.toString() );
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -158,13 +162,11 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToChat(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    private void addMemberToChatModel(DatabaseReference reference, Members members){
+
+
+
     }
-
-
-
 
 
 
@@ -176,5 +178,4 @@ public class DashboardActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 }

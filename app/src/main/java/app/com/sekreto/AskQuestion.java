@@ -17,11 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.allyants.chipview.ChipView;
 import com.allyants.chipview.SimpleChipAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -29,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import app.com.sekreto.Models.Chat;
 
 public class AskQuestion extends AppCompatActivity {
     private static final String TAG = "AskQuestion";
@@ -38,15 +44,18 @@ public class AskQuestion extends AppCompatActivity {
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     ChipView mChipView;
+
     // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DatabaseReference reference;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_screen);
-        //myDialog = new Dialog(this);
+        myDialog = new Dialog(this);
+
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         mChipView = findViewById(R.id.cvTag);
@@ -54,10 +63,16 @@ public class AskQuestion extends AppCompatActivity {
         questionText = findViewById(R.id.questionText);
         button = findViewById(R.id.storeInDBButton);
 
-        button.setOnClickListener(new View.OnClickListener(){
-
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                Log.d("AskQuestion", questionText.getText().toString());
+                if (TextUtils.isEmpty( questionText.getText().toString())){
+
+                    Toast.makeText(AskQuestion.this, "Please enter the question", Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
                 mAuth = FirebaseAuth.getInstance();
                 firebaseUser = mAuth.getCurrentUser();
 
@@ -69,8 +84,23 @@ public class AskQuestion extends AppCompatActivity {
                 question.put("User", firebaseUser);
                 question.put("Time",d1 );
 
-
-
+                String userId = firebaseUser.getUid();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                String pushId = reference.child("Chats").push().getKey();
+                /*Insert data into Chat Node*/
+                addQuestionToChatModel(reference, new Chat(pushId, questionText.getText().toString(), userId));
+                /*************Insert data into Member node***********/
+                DatabaseReference memberRef = FirebaseDatabase.getInstance().getReference("Members").child(pushId);
+                HashMap<String,String> memberMap = new HashMap<>();
+                memberMap.put("id", pushId);
+                memberMap.put("userId", userId);
+                memberRef.child(userId).setValue(memberMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(AskQuestion.this, "Member added", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                /***********Insert data into Member node***********/
                 db.collection("Questions")
                         .add(question)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -90,29 +120,32 @@ public class AskQuestion extends AppCompatActivity {
                                 Log.w(TAG, "Error adding document", e);
                             }
                         });
-
-
-
-
             }
         });
 
+    }
+
+
+
+    private void populateTags(){
+        ArrayList tags = new ArrayList();
+        tags.add("CSE");
+        tags.add("ECE");
+        tags.add("EEE");
+        tags.add("MECH");
+        tags.add("CIVIL");
+        tags.add("CHEM");
+        tags.add("MME");
+        SimpleChipAdapter adapter =  new SimpleChipAdapter(tags);
+        mChipView.setAdapter(adapter);
 
 
     }
 
-private void populateTags(){
-        ArrayList tags = new ArrayList();
-        tags.add("CSE");
-    tags.add("ECE");
-    tags.add("EEE");
-    tags.add("MECH");
-    tags.add("CIVIL");
-    tags.add("CHEM");
-    tags.add("MME");
-    SimpleChipAdapter adapter =  new SimpleChipAdapter(tags);
-    mChipView.setAdapter(adapter);
+    private void addQuestionToChatModel(DatabaseReference reference, Chat chat){
 
+        reference.child("Chats").child(chat.getId()).setValue(chat);
 
-}
+    }
+
 }

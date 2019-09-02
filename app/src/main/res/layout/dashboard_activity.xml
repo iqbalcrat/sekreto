@@ -49,19 +49,6 @@
             android:layout_gravity="start"
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_menu" />
-
-
-
-
-
-
-
-
-
-
-
-
-
     </androidx.drawerlayout.widget.DrawerLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/askQ"

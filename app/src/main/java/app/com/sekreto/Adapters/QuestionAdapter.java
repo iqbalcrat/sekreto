@@ -13,29 +13,43 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 import java.util.List;
 
-import app.com.sekreto.DashboardActivity;
-import app.com.sekreto.ListView;
+import app.com.sekreto.MessageActivity;
+import app.com.sekreto.Models.Chat;
 import app.com.sekreto.Models.Question;
 import app.com.sekreto.R;
-import app.com.sekreto.friendlychat.MainActivity;
+
 
 public class QuestionAdapter extends PagerAdapter {
 
     private List<Question> models;
+    private List<Chat> chatModels;
     private LayoutInflater layoutInflater;
     private Context context;
     private Button button;
+    FirebaseUser firebaseUser;
     private static final String TAG = "QuestionAdapter";
+    private DatabaseReference reference;
+    private boolean doNotifyDataSetChangedOnce = false;
 
-    public QuestionAdapter(List<Question> models, Context context) {
+
+    public QuestionAdapter(List<Question> models, List<Chat> chatModels,Context context) {
         this.models = models;
         this.context = context;
+        this.chatModels = chatModels;
     }
 
     @Override
     public int getCount() {
+
+
         return models.size();
     }
 
@@ -59,7 +73,6 @@ public class QuestionAdapter extends PagerAdapter {
         profilePic = view.findViewById(R.id.profile_image);
         question = view.findViewById(R.id.question);
         name = view.findViewById(R.id.name);
-        button = view.findViewById(R.id.joinChat);
 
         profilePic.setImageResource(models.get(position).getProfilePic());
         question.setText(models.get(position).getQuestion());
@@ -68,10 +81,19 @@ public class QuestionAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(context, QuestionDetails.class);
-               // intent.putExtra("param", models.get(position).getQuestion());
-                //context.startActivity(intent);
-               // finish();
+
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                String userId = firebaseUser.getUid();
+                DatabaseReference memberRef = FirebaseDatabase.getInstance().getReference("Members").child(chatModels.get(position).getId());
+                HashMap<String,String> memberMap = new HashMap<>();
+                memberMap.put("id", chatModels.get(position).getId());
+                memberMap.put("userId", userId);
+                memberRef.child(userId).setValue(memberMap);
+
+                Intent intent = new Intent(context, MessageActivity.class);
+                Log.d(TAG, "Chat ID: " +  chatModels.get(position).getId());
+                intent.putExtra("chatId", chatModels.get(position).getId());
+                context.startActivity(intent);
                 Log.d(TAG, "QuestionAdapater-> view.setOnClickListener");
 
             }
