@@ -81,7 +81,16 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.dashboard_activity);
         mAuth = FirebaseAuth.getInstance();
         //progressBar = findViewById(R.id.progressbar);
-        //askQ = findViewById(R.id.askQ);
+        askQ = findViewById(R.id.askQ);
+        askQ =  findViewById(R.id.askQ);
+        askQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, AskQuestion.class));
+            }
+        });
+
+
         firebaseUser = mAuth.getCurrentUser();
         myDialog = new Dialog(this);
         //textView.append(firebaseUser.getEmail());
@@ -151,95 +160,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, ListView.class);
         startActivity(intent);
-    }
-
-
-    public void ShowPopup(View v) {
-        TextView txtclose;
-        myDialog.setContentView(R.layout.questionpopup);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("X");
-
-        questionText = myDialog.findViewById(R.id.questionText);
-        button = myDialog.findViewById(R.id.storeInDBButton);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        button.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                if (TextUtils.isEmpty(myDialog.toString())){
-
-                    Toast.makeText(DashboardActivity.this, "Please enter the question", Toast.LENGTH_SHORT).show();
-                    return;
-
-                }
-
-                mAuth = FirebaseAuth.getInstance();
-                firebaseUser = mAuth.getCurrentUser();
-
-                Log.d(TAG , questionText.getText().toString());
-
-                Date d1 = new Date();
-                final Map<String, Object> question = new HashMap<>();
-                question.put("question", questionText.getText().toString());
-                question.put("User", firebaseUser);
-                question.put("Time",d1 );
-
-                String userId = firebaseUser.getUid();
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                String pushId = reference.child("Chats").push().getKey();
-                /*Insert data into Chat Node*/
-                addQuestionToChatModel(reference, new Chat(pushId, questionText.getText().toString(), userId));
-                /*************Insert data into Member node***********/
-                DatabaseReference memberRef = FirebaseDatabase.getInstance().getReference("Members").child(pushId);
-                HashMap<String,String> memberMap = new HashMap<>();
-                memberMap.put("id", pushId);
-                memberMap.put("userId", userId);
-                memberRef.child(userId).setValue(memberMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(DashboardActivity.this, "Member added", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                /***********Insert data into Member node***********/
-                db.collection("Questions")
-                        .add(question)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                myDialog.dismiss();
-                                Toast.makeText(DashboardActivity.this, "Question Added ; " + question.get("question"), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(DashboardActivity.this, DashboardActivity.class);
-                                startActivity(intent);
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-
-
-
-
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-    }
-
-    private void addQuestionToChatModel(DatabaseReference reference, Chat chat){
-
-        reference.child("Chats").child(chat.getId()).setValue(chat);
-
     }
 
     private void addMemberToChatModel(DatabaseReference reference, Members members){

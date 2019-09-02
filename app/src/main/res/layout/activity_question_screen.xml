@@ -1,18 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/animation_bg"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:background="@drawable/semicircle"
+    android:padding="5dp"
 
-    <Button
-        android:onClick="ShowPopup"
-        android:text="Ask question"
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_bg"/>
+    android:layout_gravity="center">
 
-</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="-188dp">
+
+
+        <EditText
+            android:id="@+id/questionText"
+            android:layout_width="400dp"
+            android:layout_height="318dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="373dp"
+            android:background="@drawable/semicircle"
+            android:gravity="start"
+            android:hint="Enter your question..."
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:textColorHint="@color/gradient_start"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/questionText"
+            android:layout_marginBottom="-41dp"
+            android:text="Enter Tags"
+            android:textSize="15sp" />
+        <com.allyants.chipview.ChipView
+            android:id="@+id/cvTag"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_alignBottom="@+id/questionText"
+            android:layout_marginBottom="-122dp"></com.allyants.chipview.ChipView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/storeInDBButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="14dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_send_black_24dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="99dp"
+            android:gravity="center"
+            android:text="No file attached"
+            android:textAlignment="center" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="140dp"
+            android:layout_marginRight="140dp"
+            android:layout_marginBottom="15dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_attach_file_black_24dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="75dp"
+            android:layout_marginRight="75dp"
+            android:layout_marginBottom="15dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_mic_black_24dp" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

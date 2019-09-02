@@ -59,6 +59,13 @@
             android:textColorHint="@color/gradient_start"
             android:textSize="30sp" />
 
+        <com.allyants.chipview.ChipView
+            android:id="@+id/cvTag"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignBottom="@+id/questionText"
+            android:layout_marginBottom="-143dp"></com.allyants.chipview.ChipView>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/storeInDBButton"
             android:layout_width="wrap_content"
